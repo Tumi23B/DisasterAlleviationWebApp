@@ -31,6 +31,5 @@ namespace Disaster_Alleviation_Web_App.Areas.Admin.Controllers
             return View(model);
         }
 
-        // Additional actions like Users(), Donors(), Helpers(), CreateProject() etc. can be added here
     }
 }

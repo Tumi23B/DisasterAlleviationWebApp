@@ -22,9 +22,9 @@ namespace Disaster_Alleviation_Web_App.Areas.Helper.Controllers
             // Fetch helper-specific data from DB
             var model = new DashboardViewModel
             {
-                TotalAssignedTasks = 8,  // example value
-                CompletedTasks = 5,      // example value
-                PendingTasks = 3         // example value
+                TotalAssignedTasks = 8,  
+                CompletedTasks = 5,     
+                PendingTasks = 3         
             };
 
             return View(model);

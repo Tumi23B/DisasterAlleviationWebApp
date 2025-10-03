@@ -13,7 +13,7 @@ namespace Disaster_Alleviation_Web_App.Data
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            // 1️⃣ Create roles
+            //  Create roles
             string[] roles = { "Admin", "Donor", "Helper" };
             foreach (var role in roles)
             {
@@ -21,7 +21,7 @@ namespace Disaster_Alleviation_Web_App.Data
                     await roleManager.CreateAsync(new IdentityRole(role));
             }
 
-            // 2️⃣ Create admin user
+            //  Create admin user
             var adminEmail = "admin@example.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)

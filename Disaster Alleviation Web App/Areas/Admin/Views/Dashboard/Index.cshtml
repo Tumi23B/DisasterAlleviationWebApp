@@ -225,6 +225,10 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.875rem;
         }
+
+        .bg-gold {
+            background-color: #FFD700 !important;
+        }
     </style>
 </head>
 <body>
@@ -1043,6 +1047,973 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="generateReport()">Generate Report</button>
                     <button type="button" class="btn btn-success" onclick="exportData()">Export Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Modals -->
+    <!-- Users Management Modal -->
+    <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="usersModalLabel">User Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="input-group" style="max-width: 300px;">
+                            <input type="text" class="form-control" placeholder="Search users...">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-success">
+                            <i class="bi bi-plus-circle me-2"></i>Add User
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>USR-001</td>
+                                    <td>Admin User</td>
+                                    <td>admin@giftofthegivers.org</td>
+                                    <td><span class="badge bg-danger">Administrator</span></td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>Today, 10:30 AM</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-key"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>USR-002</td>
+                                    <td>Coordinator</td>
+                                    <td>coordinator@giftofthegivers.org</td>
+                                    <td><span class="badge bg-warning">Coordinator</span></td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>Yesterday, 3:45 PM</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-key"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donors Management Modal -->
+    <div class="modal fade" id="donorsModal" tabindex="-1" aria-labelledby="donorsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="donorsModalLabel">Donor Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h3 class="text-success">@Model.TotalDonors</h3>
+                                    <p class="mb-0">Total Donors</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h3 class="text-primary">R 245,680</h3>
+                                    <p class="mb-0">Total Donations</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h3 class="text-warning">89</h3>
+                                    <p class="mb-0">Active This Month</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Donor ID</th>
+                                    <th>Organization/Name</th>
+                                    <th>Contact</th>
+                                    <th>Donation Type</th>
+                                    <th>Last Donation</th>
+                                    <th>Total Contributions</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>DNR-001</td>
+                                    <td>ABC Pharma</td>
+                                    <td>contact@abcpharma.co.za</td>
+                                    <td><span class="badge bg-info">Medical Supplies</span></td>
+                                    <td>Today</td>
+                                    <td>R 45,000</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DNR-002</td>
+                                    <td>Local Supermarket</td>
+                                    <td>manager@localsuper.co.za</td>
+                                    <td><span class="badge bg-success">Food Items</span></td>
+                                    <td>Yesterday</td>
+                                    <td>R 28,500</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Export Donors List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Helpers/Volunteers Modal -->
+    <div class="modal fade" id="helpersModal" tabindex="-1" aria-labelledby="helpersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="helpersModalLabel">Volunteer Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary active">All Volunteers</button>
+                            <button type="button" class="btn btn-outline-primary">Active</button>
+                            <button type="button" class="btn btn-outline-primary">Pending</button>
+                            <button type="button" class="btn btn-outline-primary">Inactive</button>
+                        </div>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createVolunteerModal">
+                            <i class="bi bi-plus-circle me-2"></i>Add Volunteer
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Volunteer ID</th>
+                                    <th>Name</th>
+                                    <th>Skills</th>
+                                    <th>Availability</th>
+                                    <th>Status</th>
+                                    <th>Assigned Tasks</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>VOL-001</td>
+                                    <td>John Smith</td>
+                                    <td>Medical, First Aid</td>
+                                    <td>Full-time</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>3 tasks</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-person-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VOL-002</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>Logistics, Driving</td>
+                                    <td>Part-time</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>0 tasks</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send Bulk Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Projects Modal -->
+    <div class="modal fade" id="manageProjectsModal" tabindex="-1" aria-labelledby="manageProjectsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="manageProjectsModalLabel">Project Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h3>12</h3>
+                                    <p class="mb-0">Active Projects</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3>8</h3>
+                                    <p class="mb-0">Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3>3</h3>
+                                    <p class="mb-0">Planning</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body text-center">
+                                    <h3>1</h3>
+                                    <p class="mb-0">On Hold</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Project ID</th>
+                                    <th>Project Name</th>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Budget</th>
+                                    <th>Progress</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PRJ-001</td>
+                                    <td>Flood Relief KZN</td>
+                                    <td><span class="badge bg-info">Relief Operation</span></td>
+                                    <td>Durban, KZN</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>R 250,000</td>
+                                    <td>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small>75%</small>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-graph-up"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PRJ-002</td>
+                                    <td>Medical Outreach GP</td>
+                                    <td><span class="badge bg-danger">Medical Mission</span></td>
+                                    <td>Johannesburg, GP</td>
+                                    <td><span class="badge bg-warning">Planning</span></td>
+                                    <td>R 180,000</td>
+                                    <td>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small>30%</small>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-graph-up"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createProjectModal">New Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Reports Modal -->
+    <div class="modal fade" id="incidentReportsModal" tabindex="-1" aria-labelledby="incidentReportsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="incidentReportsModalLabel">Incident Reports</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body text-center">
+                                    <h3>5</h3>
+                                    <p class="mb-0">Critical</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3>12</h3>
+                                    <p class="mb-0">High Priority</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h3>7</h3>
+                                    <p class="mb-0">Medium</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3>24</h3>
+                                    <p class="mb-0">Resolved</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Incident ID</th>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Severity</th>
+                                    <th>Status</th>
+                                    <th>Reported</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>INC-001</td>
+                                    <td>Flooding</td>
+                                    <td>Durban, KZN</td>
+                                    <td><span class="badge bg-danger">High</span></td>
+                                    <td><span class="badge bg-warning">Under Review</span></td>
+                                    <td>2 hours ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-check"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>INC-002</td>
+                                    <td>Earthquake</td>
+                                    <td>Johannesburg, GP</td>
+                                    <td><span class="badge bg-warning">Medium</span></td>
+                                    <td><span class="badge bg-success">Verified</span></td>
+                                    <td>5 hours ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createIncidentModal">Report New Incident</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Management Modal -->
+    <div class="modal fade" id="donationManagementModal" tabindex="-1" aria-labelledby="donationManagementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="donationManagementModalLabel">Donation Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h3>156</h3>
+                                    <p class="mb-0">Total Donations</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3>23</h3>
+                                    <p class="mb-0">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h3>45</h3>
+                                    <p class="mb-0">Processing</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3>88</h3>
+                                    <p class="mb-0">Distributed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Donation ID</th>
+                                    <th>Type</th>
+                                    <th>Donor</th>
+                                    <th>Items/Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>DON-001</td>
+                                    <td>Medical</td>
+                                    <td>ABC Pharma</td>
+                                    <td>15 Medical Kits</td>
+                                    <td><span class="badge bg-warning">Processing</span></td>
+                                    <td>Today</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DON-002</td>
+                                    <td>Food</td>
+                                    <td>Local Supermarket</td>
+                                    <td>50 Food Parcels</td>
+                                    <td><span class="badge bg-success">Distributed</span></td>
+                                    <td>Yesterday</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createDonationModal">Add Donation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Management Modal -->
+    <div class="modal fade" id="volunteerManagementModal" tabindex="-1" aria-labelledby="volunteerManagementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="volunteerManagementModalLabel">Volunteer Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h3>@Model.TotalHelpers</h3>
+                                    <p class="mb-0">Total Volunteers</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3>89</h3>
+                                    <p class="mb-0">Active</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3>12</h3>
+                                    <p class="mb-0">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h3>34</h3>
+                                    <p class="mb-0">On Assignment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Volunteer ID</th>
+                                    <th>Name</th>
+                                    <th>Skills</th>
+                                    <th>Availability</th>
+                                    <th>Status</th>
+                                    <th>Assigned Tasks</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>VOL-001</td>
+                                    <td>John Smith</td>
+                                    <td>Medical, First Aid</td>
+                                    <td>Full-time</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>3 tasks</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-person-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VOL-002</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>Logistics, Driving</td>
+                                    <td>Part-time</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>0 tasks</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createVolunteerModal">Add Volunteer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Modals for Update Actions -->
+    <!-- Update Incident Modal -->
+    <div class="modal fade" id="updateIncidentModal" tabindex="-1" aria-labelledby="updateIncidentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="updateIncidentModalLabel">Update Incident Report</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateIncidentForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="updateIncidentType" class="form-label">Incident Type</label>
+                                <select class="form-select" id="updateIncidentType">
+                                    <option value="flood" selected>Flooding</option>
+                                    <option value="earthquake">Earthquake</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="storm">Storm</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateIncidentSeverity" class="form-label">Severity Level</label>
+                                <select class="form-select" id="updateIncidentSeverity">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="updateIncidentLocation" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="updateIncidentLocation" value="Johannesburg, GP">
+                            </div>
+                            <div class="col-12">
+                                <label for="updateIncidentDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="updateIncidentDescription" rows="4">Minor earthquake reported in Johannesburg area. No major damages reported.</textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateIncidentStatus" class="form-label">Status</label>
+                                <select class="form-select" id="updateIncidentStatus">
+                                    <option value="reported">Reported</option>
+                                    <option value="verified" selected>Verified</option>
+                                    <option value="in_progress">In Progress</option>
+                                    <option value="resolved">Resolved</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateIncidentPriority" class="form-label">Priority</label>
+                                <select class="form-select" id="updateIncidentPriority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="showToast('Incident updated successfully!')">Update Incident</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Donation Modal -->
+    <div class="modal fade" id="updateDonationModal" tabindex="-1" aria-labelledby="updateDonationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="updateDonationModalLabel">Update Donation Record</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateDonationForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="updateDonationType" class="form-label">Donation Type</label>
+                                <select class="form-select" id="updateDonationType">
+                                    <option value="food" selected>Food</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="medical">Medical Supplies</option>
+                                    <option value="monetary">Monetary</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateDonorName" class="form-label">Donor Name</label>
+                                <input type="text" class="form-control" id="updateDonorName" value="Local Supermarket">
+                            </div>
+                            <div class="col-12">
+                                <label for="updateDonationItems" class="form-label">Items/Quantity</label>
+                                <input type="text" class="form-control" id="updateDonationItems" value="50 Food Parcels">
+                            </div>
+                            <div class="col-12">
+                                <label for="updateDonationDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="updateDonationDescription" rows="3">Food parcels containing non-perishable items for disaster relief.</textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateDonationDate" class="form-label">Donation Date</label>
+                                <input type="date" class="form-control" id="updateDonationDate" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateDonationStatus" class="form-label">Status</label>
+                                <select class="form-select" id="updateDonationStatus">
+                                    <option value="received">Received</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="distributed" selected>Distributed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="showToast('Donation updated successfully!')">Update Donation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Volunteer Modal -->
+    <div class="modal fade" id="updateVolunteerModal" tabindex="-1" aria-labelledby="updateVolunteerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="updateVolunteerModalLabel">Update Volunteer Information</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateVolunteerForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="updateVolunteerFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="updateVolunteerFirstName" value="John">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateVolunteerLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="updateVolunteerLastName" value="Smith">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateVolunteerEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="updateVolunteerEmail" value="john.smith@example.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateVolunteerPhone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="updateVolunteerPhone" value="+27 12 345 6789">
+                            </div>
+                            <div class="col-12">
+                                <label for="updateVolunteerSkills" class="form-label">Skills & Qualifications</label>
+                                <select class="form-select" id="updateVolunteerSkills" multiple>
+                                    <option value="medical" selected>Medical/First Aid</option>
+                                    <option value="logistics">Logistics</option>
+                                    <option value="construction">Construction</option>
+                                    <option value="counseling" selected>Counseling</option>
+                                    <option value="driving">Driving</option>
+                                    <option value="cooking">Cooking</option>
+                                    <option value="translation">Translation</option>
+                                </select>
+                                <div class="form-text">Hold Ctrl to select multiple skills</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateVolunteerAvailability" class="form-label">Availability</label>
+                                <select class="form-select" id="updateVolunteerAvailability">
+                                    <option value="fulltime" selected>Full-time</option>
+                                    <option value="parttime">Part-time</option>
+                                    <option value="weekends">Weekends Only</option>
+                                    <option value="emergency">Emergency Response Only</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updateVolunteerStatus" class="form-label">Status</label>
+                                <select class="form-select" id="updateVolunteerStatus">
+                                    <option value="active" selected>Active</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="suspended">Suspended</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="showToast('Volunteer information updated successfully!')">Update Volunteer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assign Task Modal -->
+    <div class="modal fade" id="assignTaskModal" tabindex="-1" aria-labelledby="assignTaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="assignTaskModalLabel">Assign Task to Volunteer</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="assignTaskForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="taskVolunteer" class="form-label">Volunteer</label>
+                                <select class="form-select" id="taskVolunteer">
+                                    <option value="VOL-001" selected>John Smith</option>
+                                    <option value="VOL-002">Sarah Johnson</option>
+                                    <option value="VOL-003">Michael Brown</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="taskProject" class="form-label">Project</label>
+                                <select class="form-select" id="taskProject">
+                                    <option value="PRJ-001">Flood Relief KZN</option>
+                                    <option value="PRJ-002" selected>Medical Outreach GP</option>
+                                    <option value="PRJ-003">Education Program WC</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="taskTitle" class="form-label">Task Title</label>
+                                <input type="text" class="form-control" id="taskTitle" placeholder="Enter task title">
+                            </div>
+                            <div class="col-12">
+                                <label for="taskDescription" class="form-label">Task Description</label>
+                                <textarea class="form-control" id="taskDescription" rows="4" placeholder="Describe the task in detail"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="taskPriority" class="form-label">Priority</label>
+                                <select class="form-select" id="taskPriority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="taskDeadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" id="taskDeadline">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="showToast('Task assigned successfully!')">Assign Task</button>
                 </div>
             </div>
         </div>

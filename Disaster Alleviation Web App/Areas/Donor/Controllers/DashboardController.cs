@@ -19,8 +19,6 @@ namespace Disaster_Alleviation_Web_App.Areas.Donor.Controllers
 
         public IActionResult Index()
         {
-            // Normally, fetch real data from DB
-            // Using sample data for simplicity
             var model = new DashboardViewModel
             {
                 FullName = "Valued Donor",
@@ -37,8 +35,7 @@ namespace Disaster_Alleviation_Web_App.Areas.Donor.Controllers
 
         public IActionResult Profile()
         {
-            // For simplicity, we can just return the user info
-            // Normally you'd fetch the actual ApplicationUser from _userManager
+            //fetch  ApplicationUser from _userManager
             var user = _userManager.GetUserAsync(User).Result;
 
             if (user == null)
