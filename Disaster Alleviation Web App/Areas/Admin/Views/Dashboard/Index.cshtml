@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Gift of the Givers</title>
+    <title>@ViewData["Title"]  Gift of the Givers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
@@ -30,13 +30,12 @@
             padding-top: 20px;
         }
 
-        /* Brand Colors */
         .text-gift-green {
-            color: #006747;
+            color: #006747 !important;
         }
 
         .bg-gift-green {
-            background-color: #006747;
+            background-color: #006747 !important;
         }
 
         .btn-gift-gold {
@@ -80,6 +79,7 @@
             background-color: #ffffff;
             font-weight: 500;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
             .quick-action:hover {
@@ -103,6 +103,7 @@
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
             .metric-card:hover {
@@ -142,6 +143,7 @@
             padding: 1rem;
             border-bottom: 1px solid var(--border-color);
             transition: background-color 0.2s ease;
+            cursor: pointer;
         }
 
             .activity-item:hover {
@@ -207,16 +209,52 @@
             .clickable-row:hover {
                 background-color: rgba(0, 103, 71, 0.05);
             }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gift-green fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://giftofthegivers.org/wp-content/uploads/2024/01/logo.png"
+                     alt="Gift of the Givers"
+                     height="40"
+                     class="me-2">
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="bi bi-person-circle me-1"></i>Administrator
+                </span>
+                <button class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-box-arrow-right me-1"></i>Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-5 pt-4">
         <!-- Dashboard Header -->
         <div class="dashboard-header">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h1 class="fw-bold mb-2">Admin Dashboard</h1>
-                    <p class="mb-0 opacity-75">Comprehensive management system for disaster relief operations</p>
+                    <p class="mb-0 opacity-75">Comprehensive management system for Gift of the Givers disaster relief operations</p>
                 </div>
                 <div class="col-md-4 text-end">
                     <div class="d-flex gap-2 justify-content-end">
@@ -234,11 +272,11 @@
         <!-- Key Metrics Section -->
         <div class="row g-4 mb-4">
             <div class="col-xl-3 col-md-6">
-                <div class="metric-card stat-card">
+                <div class="metric-card stat-card" data-bs-toggle="modal" data-bs-target="#usersModal">
                     <div class="metric-value">@Model.TotalUsers</div>
                     <div class="metric-label">Total Users</div>
                     <div class="mt-3">
-                        <button class="btn btn-sm btn-gift-gold rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#usersModal">
+                        <button class="btn btn-sm btn-gift-gold rounded-pill px-3">
                             Manage Users
                         </button>
                     </div>
@@ -246,11 +284,11 @@
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="metric-card stat-card">
+                <div class="metric-card stat-card" data-bs-toggle="modal" data-bs-target="#donorsModal">
                     <div class="metric-value">@Model.TotalDonors</div>
                     <div class="metric-label">Total Donors</div>
                     <div class="mt-3">
-                        <button class="btn btn-sm btn-gift-gold rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#donorsModal">
+                        <button class="btn btn-sm btn-gift-gold rounded-pill px-3">
                             View Donors
                         </button>
                     </div>
@@ -258,19 +296,19 @@
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="metric-card stat-card">
+                <div class="metric-card stat-card" data-bs-toggle="modal" data-bs-target="#helpersModal">
                     <div class="metric-value">@Model.TotalHelpers</div>
-                    <div class="metric-label">Total Helpers</div>
+                    <div class="metric-label">Total Volunteers</div>
                     <div class="mt-3">
-                        <button class="btn btn-sm btn-gift-gold rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#helpersModal">
-                            View Helpers
+                        <button class="btn btn-sm btn-gift-gold rounded-pill px-3">
+                            Manage Volunteers
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="metric-card stat-card">
+                <div class="metric-card stat-card" data-bs-toggle="modal" data-bs-target="#reportsModal">
                     <div class="metric-value">@(Model.TotalUsers + Model.TotalDonors + Model.TotalHelpers)</div>
                     <div class="metric-label">Total Community</div>
                     <div class="mt-3">
@@ -299,11 +337,11 @@
                             </button>
                             <button class="list-group-item list-group-item-action quick-action" data-bs-toggle="modal" data-bs-target="#manageProjectsModal">
                                 <i class="bi bi-gear me-2 text-gift-green"></i>
-                                Manage Existing Projects
+                                Manage Projects
                             </button>
                             <button class="list-group-item list-group-item-action quick-action" data-bs-toggle="modal" data-bs-target="#incidentReportsModal">
                                 <i class="bi bi-exclamation-triangle me-2 text-gift-green"></i>
-                                Manage Incident Reports
+                                Incident Reports
                             </button>
                             <button class="list-group-item list-group-item-action quick-action" data-bs-toggle="modal" data-bs-target="#donationManagementModal">
                                 <i class="bi bi-box-seam me-2 text-gift-green"></i>
@@ -315,7 +353,7 @@
                             </button>
                             <button class="list-group-item list-group-item-action quick-action" data-bs-toggle="modal" data-bs-target="#reportsModal">
                                 <i class="bi bi-graph-up me-2 text-gift-green"></i>
-                                View Reports & Analytics
+                                View Reports
                             </button>
                         </div>
                     </div>
@@ -338,7 +376,7 @@
                         </div>
                         <div class="alert alert-info mb-3">
                             <h6 class="alert-heading">
-                                <i class="bi bi-box-seam me-2"></i>Donation Coordination Needed
+                                <i class="bi bi-box-seam me-2"></i>Donation Coordination
                             </h6>
                             <p class="mb-1">Medical supplies awaiting distribution</p>
                             <small class="text-muted">15 items pending assignment</small>
@@ -348,7 +386,7 @@
                                 <i class="bi bi-people me-2"></i>Volunteer Requests
                             </h6>
                             <p class="mb-1">12 new volunteer applications</p>
-                            <small class="text-muted">Require screening and assignment</small>
+                            <small class="text-muted">Require screening</small>
                         </div>
                     </div>
                 </div>
@@ -394,7 +432,7 @@
                                         </h5>
                                     </div>
                                     <div class="card-body recent-activity">
-                                        <div class="activity-item clickable-row" data-bs-toggle="modal" data-bs-target="#activityDetailModal" data-activity-id="1">
+                                        <div class="activity-item" onclick="showToast('New incident report details loaded')">
                                             <div class="d-flex justify-content-between align-items-start">
                                                 <div>
                                                     <h6 class="fw-bold mb-1">New Incident Report</h6>
@@ -404,7 +442,7 @@
                                                 <span class="badge bg-warning text-dark">Pending</span>
                                             </div>
                                         </div>
-                                        <div class="activity-item clickable-row" data-bs-toggle="modal" data-bs-target="#activityDetailModal" data-activity-id="2">
+                                        <div class="activity-item" onclick="showToast('Donation details displayed')">
                                             <div class="d-flex justify-content-between align-items-start">
                                                 <div>
                                                     <h6 class="fw-bold mb-1">Donation Received</h6>
@@ -414,7 +452,7 @@
                                                 <span class="badge bg-success">Processed</span>
                                             </div>
                                         </div>
-                                        <div class="activity-item clickable-row" data-bs-toggle="modal" data-bs-target="#activityDetailModal" data-activity-id="3">
+                                        <div class="activity-item" onclick="showToast('Volunteer profile opened')">
                                             <div class="d-flex justify-content-between align-items-start">
                                                 <div>
                                                     <h6 class="fw-bold mb-1">Volunteer Registered</h6>
@@ -422,16 +460,6 @@
                                                     <small class="text-muted">6 hours ago</small>
                                                 </div>
                                                 <span class="badge bg-info">Screening</span>
-                                            </div>
-                                        </div>
-                                        <div class="activity-item clickable-row" data-bs-toggle="modal" data-bs-target="#activityDetailModal" data-activity-id="4">
-                                            <div class="d-flex justify-content-between align-items-start">
-                                                <div>
-                                                    <h6 class="fw-bold mb-1">Resource Distribution</h6>
-                                                    <p class="mb-1 text-muted">Food parcels delivered to Cape Town</p>
-                                                    <small class="text-muted">Yesterday</small>
-                                                </div>
-                                                <span class="badge bg-success">Completed</span>
                                             </div>
                                         </div>
                                     </div>
@@ -449,25 +477,25 @@
                                     <div class="card-body">
                                         <div class="row g-3 text-center">
                                             <div class="col-6">
-                                                <div class="metric-card bg-light rounded-3 p-3 clickable-row" data-bs-toggle="modal" data-bs-target="#incidentsModal">
+                                                <div class="metric-card bg-light rounded-3 p-3" data-bs-toggle="modal" data-bs-target="#incidentReportsModal">
                                                     <div class="metric-value text-primary">24</div>
                                                     <div class="metric-label">Active Incidents</div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="metric-card bg-light rounded-3 p-3 clickable-row" data-bs-toggle="modal" data-bs-target="#donationsModal">
+                                                <div class="metric-card bg-light rounded-3 p-3" data-bs-toggle="modal" data-bs-target="#donationManagementModal">
                                                     <div class="metric-value text-success">156</div>
                                                     <div class="metric-label">Total Donations</div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="metric-card bg-light rounded-3 p-3 clickable-row" data-bs-toggle="modal" data-bs-target="#volunteersModal">
+                                                <div class="metric-card bg-light rounded-3 p-3" data-bs-toggle="modal" data-bs-target="#volunteerManagementModal">
                                                     <div class="metric-value text-warning">89</div>
                                                     <div class="metric-label">Active Volunteers</div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="metric-card bg-light rounded-3 p-3 clickable-row" data-bs-toggle="modal" data-bs-target="#projectsModal">
+                                                <div class="metric-card bg-light rounded-3 p-3" data-bs-toggle="modal" data-bs-target="#manageProjectsModal">
                                                     <div class="metric-value text-info">12</div>
                                                     <div class="metric-label">Ongoing Projects</div>
                                                 </div>
@@ -491,10 +519,10 @@
                         <div class="card">
                             <div class="card-header bg-gift-green text-white d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0 fw-bold">
-                                    <i class="bi bi-exclamation-triangle me-2"></i>Incident Reports Management
+                                    <i class="bi bi-exclamation-triangle me-2"></i>Incident Reports
                                 </h5>
                                 <button class="btn btn-gift-gold" data-bs-toggle="modal" data-bs-target="#createIncidentModal">
-                                    <i class="bi bi-plus-circle me-2"></i>New Incident
+                                    <i class="bi bi-plus-circle me-2"></i>Report Incident
                                 </button>
                             </div>
                             <div class="card-body">
@@ -512,7 +540,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#incidentDetailModal" data-incident-id="INC-001">
+                                            <tr>
                                                 <td>INC-001</td>
                                                 <td>Flooding</td>
                                                 <td>Durban, KZN</td>
@@ -520,15 +548,17 @@
                                                 <td><span class="badge bg-warning">Under Review</span></td>
                                                 <td>2 hours ago</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#incidentDetailModal" data-incident-id="INC-001">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#updateIncidentModal" data-incident-id="INC-001">
-                                                        <i class="bi bi-check"></i>
-                                                    </button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-sm btn-outline-primary" onclick="viewIncident('INC-001')">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-success" onclick="updateIncidentStatus('INC-001', 'verified')">
+                                                            <i class="bi bi-check"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                            <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#incidentDetailModal" data-incident-id="INC-002">
+                                            <tr>
                                                 <td>INC-002</td>
                                                 <td>Earthquake</td>
                                                 <td>Johannesburg, GP</td>
@@ -536,12 +566,14 @@
                                                 <td><span class="badge bg-success">Verified</span></td>
                                                 <td>5 hours ago</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#incidentDetailModal" data-incident-id="INC-002">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateIncidentModal" data-incident-id="INC-002">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-sm btn-outline-primary" onclick="viewIncident('INC-002')">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateIncidentModal">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -559,36 +591,10 @@
                                     <i class="bi bi-box-seam me-2"></i>Donation Management
                                 </h5>
                                 <button class="btn btn-gift-gold" data-bs-toggle="modal" data-bs-target="#createDonationModal">
-                                    <i class="bi bi-plus-circle me-2"></i>New Donation
+                                    <i class="bi bi-plus-circle me-2"></i>Add Donation
                                 </button>
                             </div>
                             <div class="card-body">
-                                <div class="row g-4 mb-4">
-                                    <div class="col-md-3">
-                                        <div class="metric-card bg-success text-white text-center clickable-row" data-bs-toggle="modal" data-bs-target="#foodDonationsModal">
-                                            <div class="metric-value">45</div>
-                                            <div class="metric-label">Food Donations</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="metric-card bg-warning text-dark text-center clickable-row" data-bs-toggle="modal" data-bs-target="#clothingDonationsModal">
-                                            <div class="metric-value">32</div>
-                                            <div class="metric-label">Clothing Donations</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="metric-card bg-danger text-white text-center clickable-row" data-bs-toggle="modal" data-bs-target="#medicalDonationsModal">
-                                            <div class="metric-value">28</div>
-                                            <div class="metric-label">Medical Donations</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="metric-card bg-info text-white text-center clickable-row" data-bs-toggle="modal" data-bs-target="#monetaryDonationsModal">
-                                            <div class="metric-value">R 125,000</div>
-                                            <div class="metric-label">Monetary Donations</div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
@@ -603,7 +609,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#donationDetailModal" data-donation-id="DON-001">
+                                            <tr>
                                                 <td>DON-001</td>
                                                 <td>Medical</td>
                                                 <td>ABC Pharma</td>
@@ -611,15 +617,17 @@
                                                 <td><span class="badge bg-warning">Processing</span></td>
                                                 <td>Today</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#donationDetailModal" data-donation-id="DON-001">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#updateDonationModal" data-donation-id="DON-001">
-                                                        <i class="bi bi-check"></i>
-                                                    </button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-sm btn-outline-primary" onclick="viewDonation('DON-001')">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-success" onclick="processDonation('DON-001')">
+                                                            <i class="bi bi-check"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                            <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#donationDetailModal" data-donation-id="DON-002">
+                                            <tr>
                                                 <td>DON-002</td>
                                                 <td>Food</td>
                                                 <td>Local Supermarket</td>
@@ -627,12 +635,14 @@
                                                 <td><span class="badge bg-success">Distributed</span></td>
                                                 <td>Yesterday</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#donationDetailModal" data-donation-id="DON-002">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateDonationModal" data-donation-id="DON-002">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-sm btn-outline-primary" onclick="viewDonation('DON-002')">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateDonationModal">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -654,26 +664,6 @@
                                 </button>
                             </div>
                             <div class="card-body">
-                                <div class="row g-4 mb-4">
-                                    <div class="col-md-4">
-                                        <div class="metric-card bg-primary text-white text-center clickable-row" data-bs-toggle="modal" data-bs-target="#allVolunteersModal">
-                                            <div class="metric-value">156</div>
-                                            <div class="metric-label">Total Volunteers</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="metric-card bg-success text-white text-center clickable-row" data-bs-toggle="modal" data-bs-target="#activeVolunteersModal">
-                                            <div class="metric-value">89</div>
-                                            <div class="metric-label">Active Volunteers</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="metric-card bg-warning text-dark text-center clickable-row" data-bs-toggle="modal" data-bs-target="#pendingVolunteersModal">
-                                            <div class="metric-value">12</div>
-                                            <div class="metric-label">Pending Applications</div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
@@ -688,7 +678,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#volunteerDetailModal" data-volunteer-id="VOL-001">
+                                            <tr>
                                                 <td>VOL-001</td>
                                                 <td>John Smith</td>
                                                 <td>Medical, First Aid</td>
@@ -696,18 +686,20 @@
                                                 <td><span class="badge bg-success">Active</span></td>
                                                 <td>3 tasks</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#volunteerDetailModal" data-volunteer-id="VOL-001">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateVolunteerModal" data-volunteer-id="VOL-001">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#assignTaskModal" data-volunteer-id="VOL-001">
-                                                        <i class="bi bi-person-check"></i>
-                                                    </button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-sm btn-outline-primary" onclick="viewVolunteer('VOL-001')">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateVolunteerModal">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#assignTaskModal">
+                                                            <i class="bi bi-person-check"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                            <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#volunteerDetailModal" data-volunteer-id="VOL-002">
+                                            <tr>
                                                 <td>VOL-002</td>
                                                 <td>Sarah Johnson</td>
                                                 <td>Logistics, Driving</td>
@@ -715,12 +707,14 @@
                                                 <td><span class="badge bg-warning">Pending</span></td>
                                                 <td>0 tasks</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#volunteerDetailModal" data-volunteer-id="VOL-002">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#approveVolunteerModal" data-volunteer-id="VOL-002">
-                                                        <i class="bi bi-check"></i>
-                                                    </button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-sm btn-outline-primary" onclick="viewVolunteer('VOL-002')">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-success" onclick="approveVolunteer('VOL-002')">
+                                                            <i class="bi bi-check"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -732,247 +726,204 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Footer -->
-        <footer class="mt-5 py-4 text-center text-muted">
-            <p class="mb-1">&copy; 2025 Gift of the Givers Foundation - Admin Dashboard</p>
-            <p class="mb-0">Comprehensive Disaster Relief Management System</p>
-        </footer>
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">System Notification</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Operation completed successfully!
+            </div>
+        </div>
     </div>
 
     <!-- Modal Dialogs -->
-    <!-- Users Management Modal -->
-    <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+    <!-- Create Volunteer Modal -->
+    <div class="modal fade" id="createVolunteerModal" tabindex="-1" aria-labelledby="createVolunteerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="usersModalLabel">Users Management</h5>
+                    <h5 class="modal-title fw-bold" id="createVolunteerModalLabel">Add New Volunteer</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>User ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Last Login</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>USR-001</td>
-                                    <td>John Doe</td>
-                                    <td>john.doe@example.com</td>
-                                    <td><span class="badge bg-primary">Donor</span></td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>2 hours ago</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-warning">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>USR-002</td>
-                                    <td>Jane Smith</td>
-                                    <td>jane.smith@example.com</td>
-                                    <td><span class="badge bg-success">Volunteer</span></td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td>Never</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-success">Approve</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <form id="volunteerForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="volunteerFirstName" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="volunteerFirstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="volunteerLastName" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="volunteerLastName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="volunteerEmail" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="volunteerEmail" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="volunteerPhone" class="form-label">Phone *</label>
+                                <input type="tel" class="form-control" id="volunteerPhone" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="volunteerSkills" class="form-label">Skills & Qualifications</label>
+                                <select class="form-select" id="volunteerSkills" multiple>
+                                    <option value="medical">Medical/First Aid</option>
+                                    <option value="logistics">Logistics</option>
+                                    <option value="construction">Construction</option>
+                                    <option value="counseling">Counseling</option>
+                                    <option value="driving">Driving</option>
+                                    <option value="cooking">Cooking</option>
+                                    <option value="translation">Translation</option>
+                                </select>
+                                <div class="form-text">Hold Ctrl to select multiple skills</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="volunteerAvailability" class="form-label">Availability</label>
+                                <select class="form-select" id="volunteerAvailability">
+                                    <option value="fulltime">Full-time</option>
+                                    <option value="parttime">Part-time</option>
+                                    <option value="weekends">Weekends Only</option>
+                                    <option value="emergency">Emergency Response Only</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="volunteerLocation" class="form-label">Preferred Location</label>
+                                <input type="text" class="form-control" id="volunteerLocation">
+                            </div>
+                            <div class="col-12">
+                                <label for="volunteerNotes" class="form-label">Additional Notes</label>
+                                <textarea class="form-control" id="volunteerNotes" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Export Users</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="submitVolunteerForm()">Add Volunteer</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Donors Management Modal -->
-    <div class="modal fade" id="donorsModal" tabindex="-1" aria-labelledby="donorsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+    <!-- Create Donation Modal -->
+    <div class="modal fade" id="createDonationModal" tabindex="-1" aria-labelledby="createDonationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="donorsModalLabel">Donors Management</h5>
+                    <h5 class="modal-title fw-bold" id="createDonationModalLabel">Record New Donation</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-success">45</h3>
-                                    <p class="mb-0">Active Donors</p>
-                                </div>
+                    <form id="donationForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="donationType" class="form-label">Donation Type *</label>
+                                <select class="form-select" id="donationType" required onchange="toggleDonationFields()">
+                                    <option value="">Select type</option>
+                                    <option value="monetary">Monetary</option>
+                                    <option value="food">Food</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="medical">Medical Supplies</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="donorName" class="form-label">Donor Name *</label>
+                                <input type="text" class="form-control" id="donorName" required>
+                            </div>
+                            <div class="col-md-6" id="amountField" style="display: none;">
+                                <label for="donationAmount" class="form-label">Amount (R)</label>
+                                <input type="number" class="form-control" id="donationAmount" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6" id="itemsField" style="display: none;">
+                                <label for="donationItems" class="form-label">Items/Quantity</label>
+                                <input type="text" class="form-control" id="donationItems" placeholder="e.g., 50 food parcels">
+                            </div>
+                            <div class="col-12">
+                                <label for="donationDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="donationDescription" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="donationDate" class="form-label">Donation Date</label>
+                                <input type="date" class="form-control" id="donationDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="donationStatus" class="form-label">Status</label>
+                                <select class="form-select" id="donationStatus">
+                                    <option value="received">Received</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="distributed">Distributed</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-primary">R 250K</h3>
-                                    <p class="mb-0">Total Donations</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-warning">12</h3>
-                                    <p class="mb-0">Recurring Donors</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-info">5</h3>
-                                    <p class="mb-0">New This Month</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Donor ID</th>
-                                    <th>Name</th>
-                                    <th>Total Donated</th>
-                                    <th>Last Donation</th>
-                                    <th>Donation Type</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DNR-001</td>
-                                    <td>ABC Corporation</td>
-                                    <td>R 50,000</td>
-                                    <td>Yesterday</td>
-                                    <td>Monetary</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-info">Contact</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>DNR-002</td>
-                                    <td>Local Community</td>
-                                    <td>R 15,000</td>
-                                    <td>1 week ago</td>
-                                    <td>Food & Clothing</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-info">Contact</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send Bulk Email</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="submitDonationForm()">Record Donation</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Helpers Management Modal -->
-    <div class="modal fade" id="helpersModal" tabindex="-1" aria-labelledby="helpersModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+    <!-- Create Incident Modal -->
+    <div class="modal fade" id="createIncidentModal" tabindex="-1" aria-labelledby="createIncidentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="helpersModalLabel">Helpers Management</h5>
+                    <h5 class="modal-title fw-bold" id="createIncidentModalLabel">Report New Incident</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-primary">89</h3>
-                                    <p class="mb-0">Active Helpers</p>
-                                </div>
+                    <form id="incidentForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="incidentType" class="form-label">Incident Type *</label>
+                                <select class="form-select" id="incidentType" required>
+                                    <option value="">Select type</option>
+                                    <option value="flood">Flooding</option>
+                                    <option value="earthquake">Earthquake</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="storm">Storm</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="incidentSeverity" class="form-label">Severity Level *</label>
+                                <select class="form-select" id="incidentSeverity" required>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="incidentLocation" class="form-label">Location *</label>
+                                <input type="text" class="form-control" id="incidentLocation" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="incidentDescription" class="form-label">Description *</label>
+                                <textarea class="form-control" id="incidentDescription" rows="4" required></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="reporterName" class="form-label">Reporter Name</label>
+                                <input type="text" class="form-control" id="reporterName">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="reporterContact" class="form-label">Reporter Contact</label>
+                                <input type="text" class="form-control" id="reporterContact">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-success">156</h3>
-                                    <p class="mb-0">Tasks Completed</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="text-warning">12</h3>
-                                    <p class="mb-0">Pending Approval</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Helper ID</th>
-                                    <th>Name</th>
-                                    <th>Skills</th>
-                                    <th>Availability</th>
-                                    <th>Tasks Completed</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>HLP-001</td>
-                                    <td>Dr. Sarah Johnson</td>
-                                    <td>Medical, First Aid</td>
-                                    <td>Weekends</td>
-                                    <td>15</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-warning">Assign Task</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>HLP-002</td>
-                                    <td>Mike Wilson</td>
-                                    <td>Logistics, Driving</td>
-                                    <td>Full-time</td>
-                                    <td>8</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-success">Approve</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Export Helpers</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="submitIncidentForm()">Report Incident</button>
                 </div>
             </div>
         </div>
@@ -987,14 +938,14 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="projectForm">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="projectName" class="form-label">Project Name</label>
+                                <label for="projectName" class="form-label">Project Name *</label>
                                 <input type="text" class="form-control" id="projectName" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="projectType" class="form-label">Project Type</label>
+                                <label for="projectType" class="form-label">Project Type *</label>
                                 <select class="form-select" id="projectType" required>
                                     <option value="">Select type</option>
                                     <option value="relief">Relief Operation</option>
@@ -1004,406 +955,31 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label for="projectDescription" class="form-label">Description</label>
+                                <label for="projectDescription" class="form-label">Description *</label>
                                 <textarea class="form-control" id="projectDescription" rows="3" required></textarea>
                             </div>
                             <div class="col-md-6">
-                                <label for="projectLocation" class="form-label">Location</label>
+                                <label for="projectLocation" class="form-label">Location *</label>
                                 <input type="text" class="form-control" id="projectLocation" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="projectBudget" class="form-label">Budget (R)</label>
-                                <input type="number" class="form-control" id="projectBudget" required>
+                                <input type="number" class="form-control" id="projectBudget" min="0">
                             </div>
                             <div class="col-md-6">
                                 <label for="startDate" class="form-label">Start Date</label>
-                                <input type="date" class="form-control" id="startDate" required>
+                                <input type="date" class="form-control" id="startDate">
                             </div>
                             <div class="col-md-6">
                                 <label for="endDate" class="form-label">End Date</label>
                                 <input type="date" class="form-control" id="endDate">
-                            </div>
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="urgentProject">
-                                    <label class="form-check-label" for="urgentProject">
-                                        Mark as Urgent Project
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success">Create Project</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Manage Projects Modal -->
-    <div class="modal fade" id="manageProjectsModal" tabindex="-1" aria-labelledby="manageProjectsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="manageProjectsModalLabel">Manage Projects</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Project ID</th>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Location</th>
-                                    <th>Status</th>
-                                    <th>Progress</th>
-                                    <th>Budget</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PRJ-001</td>
-                                    <td>Emergency Flood Relief</td>
-                                    <td>Relief Operation</td>
-                                    <td>Durban, KZN</td>
-                                    <td><span class="badge bg-warning">In Progress</span></td>
-                                    <td>
-                                        <div class="progress" style="height: 8px;">
-                                            <div class="progress-bar" style="width: 65%"></div>
-                                        </div>
-                                        <small>65%</small>
-                                    </td>
-                                    <td>R 500,000</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-info">Edit</button>
-                                        <button class="btn btn-sm btn-outline-success">Update</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>PRJ-002</td>
-                                    <td>Medical Outreach</td>
-                                    <td>Medical Mission</td>
-                                    <td>Cape Town, WC</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td>
-                                        <div class="progress" style="height: 8px;">
-                                            <div class="progress-bar" style="width: 100%"></div>
-                                        </div>
-                                        <small>100%</small>
-                                    </td>
-                                    <td>R 250,000</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-info">Report</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Export Projects</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Incident Reports Modal -->
-    <div class="modal fade" id="incidentReportsModal" tabindex="-1" aria-labelledby="incidentReportsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="incidentReportsModalLabel">Incident Reports Management</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card text-center bg-warning text-dark">
-                                <div class="card-body">
-                                    <h3>5</h3>
-                                    <p class="mb-0">Pending Review</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-success text-white">
-                                <div class="card-body">
-                                    <h3>12</h3>
-                                    <p class="mb-0">Verified</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-danger text-white">
-                                <div class="card-body">
-                                    <h3>3</h3>
-                                    <p class="mb-0">Urgent</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-info text-white">
-                                <div class="card-body">
-                                    <h3>24</h3>
-                                    <p class="mb-0">Total Incidents</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Incident ID</th>
-                                    <th>Type</th>
-                                    <th>Location</th>
-                                    <th>Severity</th>
-                                    <th>Reported By</th>
-                                    <th>Status</th>
-                                    <th>Reported</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>INC-001</td>
-                                    <td>Flooding</td>
-                                    <td>Durban, KZN</td>
-                                    <td><span class="badge bg-danger">High</span></td>
-                                    <td>Community Member</td>
-                                    <td><span class="badge bg-warning">Under Review</span></td>
-                                    <td>2 hours ago</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-success">Verify</button>
-                                        <button class="btn btn-sm btn-outline-info">Assign</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>INC-002</td>
-                                    <td>Earthquake</td>
-                                    <td>Johannesburg, GP</td>
-                                    <td><span class="badge bg-warning">Medium</span></td>
-                                    <td>Local Authority</td>
-                                    <td><span class="badge bg-success">Verified</span></td>
-                                    <td>5 hours ago</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-info">Update</button>
-                                        <button class="btn btn-sm btn-outline-success">Resolve</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Export Incidents</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Donation Management Modal -->
-    <div class="modal fade" id="donationManagementModal" tabindex="-1" aria-labelledby="donationManagementModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="donationManagementModalLabel">Donation Management</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card text-center bg-success text-white">
-                                <div class="card-body">
-                                    <h3>45</h3>
-                                    <p class="mb-0">Food Donations</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-warning text-dark">
-                                <div class="card-body">
-                                    <h3>32</h3>
-                                    <p class="mb-0">Clothing</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-danger text-white">
-                                <div class="card-body">
-                                    <h3>28</h3>
-                                    <p class="mb-0">Medical</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-info text-white">
-                                <div class="card-body">
-                                    <h3>R 125K</h3>
-                                    <p class="mb-0">Monetary</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Donation ID</th>
-                                    <th>Type</th>
-                                    <th>Donor</th>
-                                    <th>Items/Amount</th>
-                                    <th>Status</th>
-                                    <th>Date Received</th>
-                                    <th>Assigned To</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DON-001</td>
-                                    <td>Medical</td>
-                                    <td>ABC Pharma</td>
-                                    <td>15 Medical Kits</td>
-                                    <td><span class="badge bg-warning">Processing</span></td>
-                                    <td>Today</td>
-                                    <td>Not Assigned</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-success">Process</button>
-                                        <button class="btn btn-sm btn-outline-info">Assign</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>DON-002</td>
-                                    <td>Food</td>
-                                    <td>Local Supermarket</td>
-                                    <td>50 Food Parcels</td>
-                                    <td><span class="badge bg-success">Distributed</span></td>
-                                    <td>Yesterday</td>
-                                    <td>Team Alpha</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-info">Update</button>
-                                        <button class="btn btn-sm btn-outline-success">Confirm</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Export Donations</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Volunteer Management Modal -->
-    <div class="modal fade" id="volunteerManagementModal" tabindex="-1" aria-labelledby="volunteerManagementModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="volunteerManagementModalLabel">Volunteer Management</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card text-center bg-primary text-white">
-                                <div class="card-body">
-                                    <h3>156</h3>
-                                    <p class="mb-0">Total Volunteers</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-success text-white">
-                                <div class="card-body">
-                                    <h3>89</h3>
-                                    <p class="mb-0">Active</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-warning text-dark">
-                                <div class="card-body">
-                                    <h3>12</h3>
-                                    <p class="mb-0">Pending</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-center bg-info text-white">
-                                <div class="card-body">
-                                    <h3>45</h3>
-                                    <p class="mb-0">On Assignment</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Volunteer ID</th>
-                                    <th>Name</th>
-                                    <th>Skills</th>
-                                    <th>Availability</th>
-                                    <th>Status</th>
-                                    <th>Tasks Completed</th>
-                                    <th>Last Active</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>VOL-001</td>
-                                    <td>John Smith</td>
-                                    <td>Medical, First Aid</td>
-                                    <td>Full-time</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>15</td>
-                                    <td>Today</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-warning">Assign</button>
-                                        <button class="btn btn-sm btn-outline-info">Message</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VOL-002</td>
-                                    <td>Sarah Johnson</td>
-                                    <td>Logistics, Driving</td>
-                                    <td>Part-time</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td>0</td>
-                                    <td>Never</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary">View</button>
-                                        <button class="btn btn-sm btn-outline-success">Approve</button>
-                                        <button class="btn btn-sm btn-outline-danger">Reject</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Export Volunteers</button>
+                    <button type="button" class="btn btn-success" onclick="submitProjectForm()">Create Project</button>
                 </div>
             </div>
         </div>
@@ -1465,28 +1041,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Generate Report</button>
-                    <button type="button" class="btn btn-success">Export Data</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Additional Modals for Detail Views -->
-    <div class="modal fade" id="activityDetailModal" tabindex="-1" aria-labelledby="activityDetailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="activityDetailModalLabel">Activity Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="activityDetailContent">
-                        <!-- Dynamic content will be loaded here -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+                    <button type="button" class="btn btn-success" onclick="exportData()">Export Data</button>
                 </div>
             </div>
         </div>
@@ -1497,151 +1053,238 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize tooltips
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            });
+        // Toast notification function
+        function showToast(message) {
+            const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+            document.getElementById('toastMessage').textContent = message;
+            toast.show();
+        }
 
-            // Tab functionality
-            const triggerTabList = [].slice.call(document.querySelectorAll('#dashboardTabs button'))
-            triggerTabList.forEach(function (triggerEl) {
-                const tabTrigger = new bootstrap.Tab(triggerEl)
+        // Toggle donation fields based on type
+        function toggleDonationFields() {
+            const type = document.getElementById('donationType').value;
+            const amountField = document.getElementById('amountField');
+            const itemsField = document.getElementById('itemsField');
 
-                triggerEl.addEventListener('click', function (event) {
-                    event.preventDefault()
-                    tabTrigger.show()
-                })
-            });
-
-            // Activity detail modal handler
-            const activityDetailModal = document.getElementById('activityDetailModal')
-            if (activityDetailModal) {
-                activityDetailModal.addEventListener('show.bs.modal', function (event) {
-                    const button = event.relatedTarget
-                    const activityId = button.getAttribute('data-activity-id')
-                    const modalTitle = activityDetailModal.querySelector('.modal-title')
-                    const modalBody = activityDetailModal.querySelector('.modal-body #activityDetailContent')
-
-                    // Set modal title
-                    modalTitle.textContent = `Activity Details - ID: ${activityId}`
-
-                    // Load dynamic content based on activity ID
-                    modalBody.innerHTML = `
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6>Activity Information</h6>
-                                <p><strong>Type:</strong> System Activity</p>
-                                <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
-                                <p><strong>Status:</strong> Completed</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6>Details</h6>
-                                <p>This is a detailed view of the selected activity. In a real application, this would contain specific information about the activity including user actions, system changes, and related data.</p>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <h6>Related Actions</h6>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-primary">View Logs</button>
-                                <button class="btn btn-sm btn-outline-info">Export Data</button>
-                                <button class="btn btn-sm btn-outline-warning">Mark Resolved</button>
-                            </div>
-                        </div>
-                    `
-                })
+            if (type === 'monetary') {
+                amountField.style.display = 'block';
+                itemsField.style.display = 'none';
+            } else {
+                amountField.style.display = 'none';
+                itemsField.style.display = 'block';
             }
+        }
 
-            // Initialize charts in reports modal
-            const reportsModal = document.getElementById('reportsModal')
-            if (reportsModal) {
-                reportsModal.addEventListener('show.bs.modal', function () {
-                    initializeCharts()
-                })
+        // Form submission functions
+        function submitVolunteerForm() {
+            const form = document.getElementById('volunteerForm');
+            if (form.checkValidity()) {
+                showToast('Volunteer added successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('createVolunteerModal')).hide();
+                form.reset();
+            } else {
+                form.reportValidity();
             }
+        }
 
-            function initializeCharts() {
-                // Donation Trends Chart
-                const donationCtx = document.getElementById('donationChart').getContext('2d')
-                new Chart(donationCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                        datasets: [{
-                            label: 'Monetary Donations',
-                            data: [12000, 19000, 15000, 25000, 22000, 30000],
-                            borderColor: '#006747',
-                            backgroundColor: 'rgba(0, 103, 71, 0.1)',
-                            tension: 0.4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            }
+        function submitDonationForm() {
+            const form = document.getElementById('donationForm');
+            if (form.checkValidity()) {
+                showToast('Donation recorded successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('createDonationModal')).hide();
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        function submitIncidentForm() {
+            const form = document.getElementById('incidentForm');
+            if (form.checkValidity()) {
+                showToast('Incident reported successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('createIncidentModal')).hide();
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        function submitProjectForm() {
+            const form = document.getElementById('projectForm');
+            if (form.checkValidity()) {
+                showToast('Project created successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('createProjectModal')).hide();
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // Action functions
+        function viewIncident(id) {
+            showToast(`Viewing incident ${id}`);
+        }
+
+        function updateIncidentStatus(id, status) {
+            showToast(`Incident ${id} status updated to ${status}`);
+        }
+
+        function viewDonation(id) {
+            showToast(`Viewing donation ${id}`);
+        }
+
+        function processDonation(id) {
+            showToast(`Processing donation ${id}`);
+        }
+
+        function viewVolunteer(id) {
+            showToast(`Viewing volunteer ${id}`);
+        }
+
+        function approveVolunteer(id) {
+            showToast(`Volunteer ${id} approved`);
+        }
+
+        function generateReport() {
+            showToast('Report generated successfully!');
+        }
+
+        function exportData() {
+            showToast('Data exported successfully!');
+        }
+
+        // Initialize charts when reports modal is shown
+        document.getElementById('reportsModal').addEventListener('show.bs.modal', function() {
+            setTimeout(initializeCharts, 100);
+        });
+
+        function initializeCharts() {
+            // Donation Trends Chart
+            const donationCtx = document.getElementById('donationChart').getContext('2d');
+            new Chart(donationCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Monetary Donations (R)',
+                        data: [12000, 19000, 15000, 25000, 22000, 30000],
+                        borderColor: '#006747',
+                        backgroundColor: 'rgba(0, 103, 71, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Monthly Donation Trends'
                         }
                     }
-                })
+                }
+            });
 
-                // Incident Types Chart
-                const incidentCtx = document.getElementById('incidentChart').getContext('2d')
-                new Chart(incidentCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Flooding', 'Earthquake', 'Fire', 'Storm', 'Other'],
-                        datasets: [{
-                            data: [35, 25, 15, 20, 5],
-                            backgroundColor: [
-                                '#006747',
-                                '#FFD700',
-                                '#DC3545',
-                                '#17A2B8',
-                                '#6C757D'
-                            ]
-                        }]
+            // Incident Types Chart
+            const incidentCtx = document.getElementById('incidentChart').getContext('2d');
+            new Chart(incidentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Flooding', 'Earthquake', 'Fire', 'Storm', 'Other'],
+                    datasets: [{
+                        data: [35, 25, 15, 20, 5],
+                        backgroundColor: [
+                            '#006747',
+                            '#FFD700',
+                            '#DC3545',
+                            '#17A2B8',
+                            '#6C757D'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Incident Types Distribution'
+                        }
                     }
-                })
+                }
+            });
 
-                // Volunteer Activity Chart
-                const volunteerCtx = document.getElementById('volunteerChart').getContext('2d')
-                new Chart(volunteerCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Medical', 'Logistics', 'Education', 'Construction', 'Admin'],
-                        datasets: [{
-                            label: 'Hours Contributed',
-                            data: [450, 320, 280, 190, 150],
-                            backgroundColor: '#006747'
-                        }]
+            // Volunteer Activity Chart
+            const volunteerCtx = document.getElementById('volunteerChart').getContext('2d');
+            new Chart(volunteerCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Medical', 'Logistics', 'Education', 'Construction', 'Admin'],
+                    datasets: [{
+                        label: 'Hours Contributed',
+                        data: [450, 320, 280, 190, 150],
+                        backgroundColor: '#006747'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Volunteer Activity by Department'
+                        }
                     }
-                })
+                }
+            });
 
-                // Project Progress Chart
-                const projectCtx = document.getElementById('projectChart').getContext('2d')
-                new Chart(projectCtx, {
-                    type: 'polarArea',
-                    data: {
-                        labels: ['Completed', 'In Progress', 'Planning', 'On Hold'],
-                        datasets: [{
-                            data: [8, 12, 5, 3],
-                            backgroundColor: [
-                                '#28A745',
-                                '#FFC107',
-                                '#17A2B8',
-                                '#DC3545'
-                            ]
-                        }]
+            // Project Progress Chart
+            const projectCtx = document.getElementById('projectChart').getContext('2d');
+            new Chart(projectCtx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['Completed', 'In Progress', 'Planning', 'On Hold'],
+                    datasets: [{
+                        data: [8, 12, 5, 3],
+                        backgroundColor: [
+                            '#28A745',
+                            '#FFC107',
+                            '#17A2B8',
+                            '#DC3545'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Project Status Overview'
+                        }
                     }
-                })
-            }
+                }
+            });
+        }
 
-            // Auto-refresh data every 30 seconds
-            setInterval(function() {
-                console.log('Refreshing dashboard data...');
-            }, 30000);
+        // Auto-refresh data every 30 seconds
+        setInterval(function() {
+            console.log('Refreshing dashboard data...');
+        }, 30000);
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     </script>
 </body>
