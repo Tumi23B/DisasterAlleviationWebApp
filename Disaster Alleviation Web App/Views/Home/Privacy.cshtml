@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top border-bottom border-gold">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/images/logo.png" alt="Gift of the Givers Foundation" height="40" class="me-2">
+            
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="btn btn-success rounded-pill px-4 me-2 fw-semibold" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="btn btn-outline-success rounded-pill px-4 fw-semibold" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Privacy Content -->
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4 p-4">
+                <h1 class="text-success fw-bold mb-4">@ViewData["Title"]</h1>
+
+                <p>
+                    At <strong>Gift of the Givers Foundation</strong>, your privacy is our priority.
+                    This Privacy Policy explains how we collect, use, and protect your information when you interact with our website.
+                </p>
+
+                <h4 class="mt-4 text-success fw-semibold">Information We Collect</h4>
+                <ul>
+                    <li>Personal information you provide when registering, donating, or volunteering.</li>
+                    <li>Information collected automatically such as IP address and browser type.</li>
+                    <li>Communications preferences and consent details.</li>
+                </ul>
+
+                <h4 class="mt-4 text-success fw-semibold">How We Use Your Information</h4>
+                <ul>
+                    <li>To provide and improve our services.</li>
+                    <li>To communicate important updates, events, and opportunities.</li>
+                    <li>To process donations and manage volunteer engagements.</li>
+                </ul>
+
+                <h4 class="mt-4 text-success fw-semibold">Data Sharing and Protection</h4>
+                <ul>
+                    <li>We do not sell or trade your personal information.</li>
+                    <li>We may share information with trusted partners to help us deliver our services.</li>
+                    <li>We implement strict security measures to protect your data.</li>
+                </ul>
+
+                <h4 class="mt-4 text-success fw-semibold">Your Rights</h4>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access, update, or delete your personal information.</li>
+                    <li>Opt-out of marketing communications at any time.</li>
+                    <li>Request details about how your data is processed.</li>
+                </ul>
+
+                <h4 class="mt-4 text-success fw-semibold">Contact Us</h4>
+                <p>
+                    For questions or concerns about your privacy, please contact us at:
+                    <a href="mailto:privacy@giftofthegivers.org" class="text-success text-decoration-none">privacy@giftofthegivers.org</a>
+                </p>
+
+                <p class="text-muted fst-italic mt-4">
+                    This Privacy Policy is subject to change. Please check back regularly for updates.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .border-gold {
+        border-color: #FFD700 !important;
+    }
+
+    h1, h4 {
+        color: #006400;
+    }
+
+    .card {
+        background-color: #fff;
+    }
+
+    a.text-success:hover {
+        color: #004d00;
+        text-decoration: underline;
+    }
+
+    ul li {
+        margin-bottom: 0.5rem;
+    }
+</style>

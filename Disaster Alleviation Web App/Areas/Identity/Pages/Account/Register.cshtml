@@ -1,0 +1,220 @@
+﻿@page
+@model Disaster_Alleviation_Web_App.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top border-bottom border-gold">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/images/logo.png" alt="Gift Of The Givers Foundation" height="40" class="me-2">
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link text-success me-2 fw-semibold" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="btn btn-success rounded-pill px-4 shadow-sm fw-semibold" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Register Card -->
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light pt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-2 text-success fw-bold">Create Your Account</h2>
+                        <p class="text-center text-muted mb-4">Join the <span class="text-success">Gift of the Givers</span> community</p>
+                        <hr class="mb-4 border-gold" />
+
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                            <!-- Role -->
+                            <div class="mb-4">
+                                <label asp-for="Input.Role" class="form-label fw-semibold text-success">I am registering as:</label>
+                                <select asp-for="Input.Role" class="form-select rounded-3 border-success shadow-sm">
+                                    <option value="">-- Select Role --</option>
+                                    <option value="Donor">Donor</option>
+                                    <option value="Helper">Helper / Volunteer</option>
+                                </select>
+                                <span asp-validation-for="Input.Role" class="text-danger"></span>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Input.FullName" class="form-control ps-5 rounded-3 border-success shadow-sm" placeholder="Full Name" maxlength="100" />
+                                <label asp-for="Input.FullName">Full Name</label>
+                                <i class="bi bi-person-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Input.Address" class="form-control ps-5 rounded-3 border-success shadow-sm" placeholder="Address" maxlength="200" />
+                                <label asp-for="Input.Address">Address</label>
+                                <i class="bi bi-geo-alt-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <span asp-validation-for="Input.Address" class="text-danger"></span>
+                            </div>
+
+                            <!-- Cellphone -->
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Input.CellphoneNumber" type="tel" class="form-control ps-5 rounded-3 border-success shadow-sm" placeholder="Cellphone Number" maxlength="15" />
+                                <label asp-for="Input.CellphoneNumber">Cellphone Number</label>
+                                <i class="bi bi-telephone-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <span asp-validation-for="Input.CellphoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <!-- Availability -->
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Input.Availability" class="form-control ps-5 rounded-3 border-success shadow-sm" placeholder="Availability" maxlength="50" />
+                                <label asp-for="Input.Availability">Availability</label>
+                                <i class="bi bi-clock-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <small class="text-muted">E.g., Weekdays, Weekends, Evenings</small>
+                                <span asp-validation-for="Input.Availability" class="text-danger"></span>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="mb-3">
+                                <label asp-for="Input.Skills" class="form-label fw-semibold text-success">Skills</label>
+                                <input id="skillsInput" class="form-control mb-2 rounded-3 border-success shadow-sm" placeholder="Type a skill and press Enter" />
+                                <div id="skillsTags" class="d-flex flex-wrap gap-2"></div>
+                                <input asp-for="Input.Skills" type="hidden" id="Input_Skills" />
+                                <small class="text-muted">Add multiple skills, e.g., Cooking, First Aid</small>
+                                <span asp-validation-for="Input.Skills" class="text-danger"></span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Input.Email" type="email" class="form-control ps-5 rounded-3 border-success shadow-sm" autocomplete="username" placeholder="name@example.com" />
+                                <label asp-for="Input.Email">Email</label>
+                                <i class="bi bi-envelope-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Input.Password" type="password" class="form-control ps-5 rounded-3 border-success shadow-sm" autocomplete="new-password" placeholder="Password" />
+                                <label asp-for="Input.Password">Password</label>
+                                <i class="bi bi-lock-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="form-floating mb-4 position-relative">
+                                <input asp-for="Input.ConfirmPassword" type="password" class="form-control ps-5 rounded-3 border-success shadow-sm" autocomplete="new-password" placeholder="Confirm Password" />
+                                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                <i class="bi bi-lock-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+
+                            <!-- Register Button -->
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-success mb-3 shadow-sm rounded-pill fw-bold">
+                                Register
+                            </button>
+
+                            <div class="text-center">
+                                <p class="text-muted mb-0">
+                                    Already have an account?
+                                    <a asp-page="./Login" class="text-success text-decoration-none fw-semibold">Login here</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Multi-tag Skills input
+        const skillsInput = document.getElementById('skillsInput');
+        const skillsTags = document.getElementById('skillsTags');
+        const hiddenInput = document.getElementById('Input_Skills');
+        let skills = [];
+
+        function updateHiddenInput() {
+            hiddenInput.value = skills.join(',');
+        }
+
+        function createTag(label) {
+            const div = document.createElement('div');
+            div.className = 'badge bg-success text-white d-flex align-items-center px-3 py-2 rounded-pill';
+            div.innerText = label;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'btn-close btn-close-white btn-sm ms-2';
+            removeBtn.addEventListener('click', () => {
+                skills = skills.filter(skill => skill !== label);
+                div.remove();
+                updateHiddenInput();
+            });
+
+            div.appendChild(removeBtn);
+            skillsTags.appendChild(div);
+        }
+
+        skillsInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const value = skillsInput.value.trim();
+                if (value && !skills.includes(value)) {
+                    skills.push(value);
+                    createTag(value);
+                    updateHiddenInput();
+                    skillsInput.value = '';
+                }
+            }
+        });
+
+        // Success message handling after registration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if registration was successful and show personalized message
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('registered') && urlParams.get('registered') === 'true') {
+                const fullName = '@Model.Input?.FullName';
+                if (fullName) {
+                    alert('Welcome, ' + fullName + '! Your account has been created successfully.');
+                    // Redirect to dashboard or login page
+                    window.location.href = '/Identity/Account/Login?registered=true&name=' + encodeURIComponent(fullName);
+                }
+            }
+        });
+    </script>
+}
+
+<style>
+    body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .form-control:focus {
+        border-color: #006400;
+        box-shadow: 0 0 0 .2rem rgba(0, 100, 0, 0.25);
+    }
+
+    #skillsTags .badge {
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        #skillsTags .badge:hover {
+            background-color: #004d00;
+        }
+
+    #registerSubmit {
+        border: 2px solid #FFD700;
+    }
+
+        #registerSubmit:hover {
+            background-color: #004d00;
+            border-color: #FFD700;
+            transform: translateY(-1px);
+            transition: 0.2s;
+        }
+</style>

@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top border-bottom border-gold">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/images/logo.png" alt="Gift of the Givers Foundation" height="40" class="me-2">
+            
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="btn btn-success rounded-pill px-4 me-2 fw-semibold" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="btn btn-outline-success rounded-pill px-4 fw-semibold" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light pt-5">
+    <div class="text-center px-3">
+        <h1 class="display-3 fw-bold text-success mb-3">Welcome to Gift of the Givers</h1>
+        <p class="lead text-muted mb-4">
+            We are a humanitarian organization dedicated to helping communities in need.
+            Join us as a donor or volunteer and make a difference today!
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a class="btn btn-success btn-lg rounded-pill shadow-sm px-4 fw-bold" asp-area="Identity" asp-page="/Account/Register">Join Now</a>
+            <a class="btn btn-outline-success btn-lg rounded-pill shadow-sm px-4 fw-bold" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+
+        <div class="mt-5">
+            <p class="text-muted fst-italic">
+                Together, we can give hope and support to those who need it most.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        background: #f8f9fa;
+    }
+
+    h1.display-3 {
+        color: #006400;
+    }
+
+    .btn-success {
+        background-color: #006400;
+        border-color: #006400;
+        transition: 0.2s;
+    }
+
+        .btn-success:hover {
+            background-color: #004d00;
+            border-color: #004d00;
+            transform: translateY(-2px);
+        }
+
+    .btn-outline-success {
+        color: #006400;
+        border-color: #006400;
+        transition: 0.2s;
+    }
+
+        .btn-outline-success:hover {
+            background-color: #006400;
+            color: #fff;
+            border-color: #004d00;
+            transform: translateY(-2px);
+        }
+
+    .border-gold {
+        border-color: #FFD700 !important;
+    }
+</style>

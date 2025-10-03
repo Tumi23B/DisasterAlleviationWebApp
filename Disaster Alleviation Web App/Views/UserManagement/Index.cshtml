@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h2>User Management</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Current Role</th>
+            <th>Change Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>
+                    <!-- Ideally, fetch actual role -->
+                </td>
+                <td>
+                    <form asp-action="ChangeRole" method="post">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <select name="role" class="form-select">
+                            <option value="Donor">Donor</option>
+                            <option value="Helper">Helper</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-success mt-1">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

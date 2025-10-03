@@ -1,0 +1,114 @@
+﻿@model Disaster_Alleviation_Web_App.Areas.Admin.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-5 pt-4">
+    <h1 class="text-center fw-bold text-gift-green mb-5">@ViewData["Title"]</h1>
+
+    <div class="row g-4">
+
+        <!-- Users Card -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body text-center py-5">
+                    <h5 class="card-title fw-bold text-gift-green">Total Users</h5>
+                    <p class="card-text display-6 fw-semibold">@Model.TotalUsers</p>
+                    <a class="btn btn-gift-gold rounded-pill px-4 mt-3"
+                       href="@Url.Action("Users", "Dashboard", new { area = "Admin" })">Manage Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donors Card -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body text-center py-5">
+                    <h5 class="card-title fw-bold text-gift-green">Total Donors</h5>
+                    <p class="card-text display-6 fw-semibold">@Model.TotalDonors</p>
+                    <a class="btn btn-gift-gold rounded-pill px-4 mt-3"
+                       href="@Url.Action("Donors", "Dashboard", new { area = "Admin" })">View Donors</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpers Card -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body text-center py-5">
+                    <h5 class="card-title fw-bold text-gift-green">Total Helpers</h5>
+                    <p class="card-text display-6 fw-semibold">@Model.TotalHelpers</p>
+                    <a class="btn btn-gift-gold rounded-pill px-4 mt-3"
+                       href="@Url.Action("Helpers", "Dashboard", new { area = "Admin" })">View Helpers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Section -->
+    <div class="mt-5">
+        <h3 class="fw-bold text-gift-green mb-3">Quick Actions</h3>
+        <div class="list-group">
+            <a href="@Url.Action("CreateProject", "Dashboard", new { area = "Admin" })"
+               class="list-group-item list-group-item-action shadow-sm quick-action">
+                Create New Project
+            </a>
+            <a href="@Url.Action("ManageProjects", "Dashboard", new { area = "Admin" })"
+               class="list-group-item list-group-item-action shadow-sm quick-action">
+                Manage Existing Projects
+            </a>
+            <a href="@Url.Action("Reports", "Dashboard", new { area = "Admin" })"
+               class="list-group-item list-group-item-action shadow-sm quick-action">
+                View Reports
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        background-color: #f9fdfb;
+    }
+
+    /* Brand Colors */
+    .text-gift-green {
+        color: #006747;
+    }
+
+    .btn-gift-gold {
+        background-color: #FFD700;
+        color: #004d00;
+        font-weight: bold;
+        border: none;
+        transition: 0.3s ease-in-out;
+    }
+
+        .btn-gift-gold:hover {
+            background-color: #e6c200;
+            color: #002d00;
+        }
+
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+    .quick-action {
+        border-radius: 12px;
+        margin-bottom: 12px;
+        border-left: 6px solid #006747;
+        background-color: #ffffff;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+        .quick-action:hover {
+            background-color: #e6f2ed;
+            color: #004d00;
+        }
+</style>

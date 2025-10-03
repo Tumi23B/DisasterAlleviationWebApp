@@ -1,0 +1,2064 @@
+﻿@model Disaster_Alleviation_Web_App.Areas.Helper.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Helper Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gift of the Givers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --gift-green: #006747;
+            --gift-green-light: #008055;
+            --gift-green-lighter: #00a86b;
+            --gift-gold: #D4AF37;
+            --gift-gold-light: #F4E4A6;
+            --helper-green: #198754;
+            --helper-green-light: #20c997;
+            --helper-green-lighter: #38d9a9;
+            --helper-orange: #fd7e14;
+            --helper-orange-light: #fd9843;
+            --white: #FFFFFF;
+            --light-bg: #F8F9FA;
+            --border-color: #E9ECEF;
+            --text-dark: #333333;
+            --text-muted: #6C757D;
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--white) !important;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            padding-top: 76px;
+            color: var(--text-dark);
+        }
+
+        /* Brand Color Classes */
+        .text-gold {
+            color: var(--gift-gold) !important;
+        }
+
+        .text-gift-green {
+            color: var(--gift-green) !important;
+        }
+
+        .text-helper-green {
+            color: var(--helper-green) !important;
+        }
+
+        .text-helper-orange {
+            color: var(--helper-orange) !important;
+        }
+
+        .bg-gift-green {
+            background-color: var(--gift-green) !important;
+        }
+
+        .bg-gold {
+            background-color: var(--gift-gold) !important;
+        }
+
+        .bg-helper-green {
+            background-color: var(--helper-green) !important;
+        }
+
+        .bg-helper-green-light {
+            background-color: var(--helper-green-light) !important;
+        }
+
+        .bg-helper-orange {
+            background-color: var(--helper-orange) !important;
+        }
+
+        .border-gold {
+            border-color: var(--gift-gold) !important;
+        }
+
+        .border-helper-green {
+            border-color: var(--helper-green) !important;
+        }
+
+        /* Button Styles */
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gift-gold), #E5C158);
+            color: var(--gift-green);
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-gold:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+                color: var(--gift-green);
+            }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--gift-green), var(--gift-green-light));
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-success:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 103, 71, 0.3);
+            }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--helper-green), var(--helper-green-light));
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+            }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--helper-orange), var(--helper-orange-light));
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-warning:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(253, 126, 20, 0.3);
+            }
+
+        .btn-outline-gold {
+            border: 2px solid var(--gift-gold);
+            color: var(--gift-gold);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-gold:hover {
+                background-color: var(--gift-gold);
+                color: var(--gift-green);
+                transform: translateY(-2px);
+            }
+
+        .btn-outline-primary {
+            border: 2px solid var(--helper-green);
+            color: var(--helper-green);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: var(--helper-green);
+                color: var(--white);
+                transform: translateY(-2px);
+            }
+
+        /* Card and Layout Styles */
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--white), var(--light-bg));
+            border-left: 4px solid var(--helper-green);
+        }
+
+        .task-card {
+            background: linear-gradient(135deg, var(--light-bg), var(--white));
+            border-top: 4px solid var(--gift-gold);
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, var(--white), var(--light-bg));
+            border-left: 4px solid var(--gift-green);
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--gift-green) !important;
+        }
+
+            .nav-link:hover {
+                color: var(--gift-gold) !important;
+            }
+
+            .nav-link.active {
+                color: var(--gift-gold) !important;
+                font-weight: 600;
+            }
+
+        /* Progress Bar Styles */
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+            background-color: var(--border-color);
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+        }
+
+        /* Task Status Badges */
+        .badge-pending {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: black;
+        }
+
+        .badge-in-progress {
+            background: linear-gradient(135deg, var(--helper-green), var(--helper-green-light));
+            color: white;
+        }
+
+        .badge-completed {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .badge-urgent {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            color: white;
+        }
+
+        /* Impact Circle Styles */
+        .impact-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(var(--gift-green) 0deg, var(--gift-green) calc(var(--rotation, 0) * 1deg), var(--border-color) calc(var(--rotation, 0) * 1deg));
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .impact-circle-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 4rem;
+        }
+
+        /* Task Priority Indicators */
+        .priority-high::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #dc3545;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .priority-medium::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #ffc107;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .priority-low::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--helper-green), var(--helper-green-light));
+            color: white;
+            border-radius: 12px 12px 0 0;
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--helper-green);
+                box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+            }
+
+        /* Incident Reporting Styles */
+        .incident-type-card {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .incident-type-card:hover {
+                border-color: var(--helper-green);
+                background-color: rgba(25, 135, 84, 0.05);
+            }
+
+            .incident-type-card.selected {
+                border-color: var(--helper-green);
+                background-color: rgba(25, 135, 84, 0.1);
+            }
+
+        .severity-level {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .severity-level:hover {
+                transform: translateY(-2px);
+            }
+
+            .severity-level.selected {
+                border-color: var(--helper-orange);
+                background-color: rgba(253, 126, 20, 0.1);
+            }
+
+        .location-preview {
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-bg), var(--white));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        /* Impact Report Styles */
+        .impact-metric-card {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .impact-metric-card:hover {
+                border-color: var(--gift-green);
+                background-color: rgba(0, 103, 71, 0.05);
+            }
+
+        /* History Styles */
+        .history-item {
+            border-left: 4px solid var(--helper-green);
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--light-bg);
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+            .history-item:hover {
+                transform: translateX(5px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+
+        .history-item-incident {
+            border-left-color: var(--helper-orange);
+        }
+
+        .history-item-impact {
+            border-left-color: var(--gift-green);
+        }
+
+        /* Availability Calendar Styles */
+        .availability-day {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+            .availability-day:hover {
+                border-color: var(--helper-green);
+            }
+
+            .availability-day.selected {
+                border-color: var(--helper-green);
+                background-color: rgba(25, 135, 84, 0.1);
+            }
+
+        .time-slot {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px;
+            margin: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .time-slot:hover {
+                background-color: rgba(25, 135, 84, 0.05);
+            }
+
+            .time-slot.selected {
+                background-color: var(--helper-green);
+                color: white;
+                border-color: var(--helper-green);
+            }
+
+        /* Profile Styles */
+        .profile-section {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+            .profile-section:last-child {
+                border-bottom: none;
+            }
+
+        .skill-tag {
+            background: linear-gradient(135deg, var(--helper-green), var(--helper-green-light));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin: 2px;
+            display: inline-block;
+        }
+
+        /* Task Management Styles */
+        .task-filter {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .task-item {
+            border-left: 4px solid var(--helper-green);
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--light-bg);
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+            .task-item:hover {
+                transform: translateX(5px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+
+        .task-item-urgent {
+            border-left-color: var(--helper-orange);
+        }
+
+        .task-item-completed {
+            border-left-color: var(--gift-green);
+        }
+
+        .task-progress {
+            height: 6px;
+            border-radius: 3px;
+        }
+
+        /* Photo Upload Styles */
+        .photo-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .photo-upload-area:hover {
+                border-color: var(--helper-green);
+                background-color: rgba(25, 135, 84, 0.05);
+            }
+
+        .photo-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gold">
+        <div class="container">
+            <!-- Brand Logo and Name -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/images/logo.png" alt="Gift Of The Givers Foundation" height="40" class="me-2">
+                <span class="fw-bold text-gift-green">Gift of the Givers</span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+
+                    <!-- Dashboard Link (Active) -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3 active" asp-area="Helper" asp-page="/Dashboard/Index">
+                            <i class="bi bi-speedometer2 me-1"></i>Dashboard
+                        </a>
+                    </li>
+
+                    <!-- Tasks Management Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3" href="#" id="tasksLink">
+                            <i class="bi bi-list-task me-1"></i>My Tasks
+                        </a>
+                    </li>
+
+                    <!-- Availability Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3" href="#" id="availabilityLink">
+                            <i class="bi bi-calendar-check me-1"></i>Availability
+                        </a>
+                    </li>
+
+                    <!-- Profile Management Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav fw-semibold me-3" href="#" id="profileLink">
+                            <i class="bi bi-person-circle me-1"></i>Profile
+                        </a>
+                    </li>
+
+                    <!-- Logout Button -->
+                    <li class="nav-item">
+                        <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-gold rounded-pill px-3 fw-semibold btn-nav">
+                                <i class="bi bi-box-arrow-right me-1"></i>Logout
+                            </button>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content Container -->
+    <div class="container-fluid mt-4">
+
+        <!-- Welcome Section with User Greeting -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <!-- Personalized Welcome Message -->
+                <h1 class="fw-bold text-gift-green mb-2">
+                    <i class="bi bi-person-badge me-2"></i>Welcome Back, Helper!
+                </h1>
+                <p class="text-muted mb-3">
+                    Thank you for your dedication in supporting humanitarian efforts and making a difference in people's lives
+                </p>
+                <!-- Helper Status and Information -->
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <span class="badge bg-success rounded-pill py-2 px-3 fw-semibold">
+                        <i class="bi bi-check-circle me-1"></i>Active Volunteer
+                    </span>
+                    <span class="badge bg-helper-green rounded-pill py-2 px-3 fw-semibold">
+                        <i class="bi bi-star me-1"></i>@Model.CompletedTasks Completed Tasks
+                    </span>
+                    <span class="text-muted">
+                        <i class="bi bi-clock me-1"></i>Last login: @DateTime.Now.ToString("MMM dd, yyyy 'at' hh:mm tt")
+                    </span>
+                </div>
+            </div>
+            <!-- Weekly Performance Summary Card -->
+            <div class="col-lg-4 mt-3 mt-lg-0">
+                <div class="card impact-card h-100">
+                    <div class="card-body text-center p-4">
+                        <h6 class="text-gift-green fw-bold mb-3">This Week's Performance</h6>
+                        <div class="d-flex justify-content-around align-items-center">
+                            <div>
+                                <div class="fw-bold text-gift-green fs-3">@(Model.CompletedTasks / 4)</div>
+                                <small class="text-muted">Avg. Weekly</small>
+                            </div>
+                            <div class="vr"></div>
+                            <div>
+                                <div class="fw-bold text-gold fs-3">@(Model.PendingTasks)</div>
+                                <small class="text-muted">Pending Tasks</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid Layout -->
+        <div class="row g-4">
+
+            <!-- Left Column (8 units wide) -->
+            <div class="col-lg-8">
+                <!-- Statistics Cards Row -->
+                <div class="row g-3 mb-4">
+
+                    <!-- Total Assigned Tasks Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Assigned Tasks</h6>
+                                        <p class="h3 fw-bold text-helper-green mb-1">@Model.TotalAssignedTasks</p>
+                                        <small class="text-muted">Total tasks assigned</small>
+                                    </div>
+                                    <i class="bi bi-list-task fs-2 text-helper-green opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completed Tasks Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Completed</h6>
+                                        <p class="h3 fw-bold text-success mb-1">@Model.CompletedTasks</p>
+                                        <small class="text-muted">Tasks completed</small>
+                                    </div>
+                                    <i class="bi bi-check-circle fs-2 text-success opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Tasks Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Pending</h6>
+                                        <p class="h3 fw-bold text-warning mb-1">@Model.PendingTasks</p>
+                                        <small class="text-muted">Awaiting action</small>
+                                    </div>
+                                    <i class="bi bi-clock-history fs-2 text-warning opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completion Rate Card -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card stat-card h-100">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h6 class="fw-bold text-muted mb-2">Completion Rate</h6>
+                                        <p class="h3 fw-bold text-gold mb-1">@(Model.TotalAssignedTasks > 0 ? ((Model.CompletedTasks * 100) / Model.TotalAssignedTasks) : 0)%</p>
+                                        <small class="text-muted">Task efficiency</small>
+                                    </div>
+                                    <i class="bi bi-graph-up fs-2 text-gold opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions and Recent Tasks Side by Side -->
+                <div class="row g-4">
+
+                    <!-- Quick Actions Panel -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-helper-green text-white rounded-top-3 py-3">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="bi bi-lightning-charge-fill me-2"></i>Quick Actions
+                                </h5>
+                            </div>
+                            <div class="card-body p-3">
+                                <div class="row g-2">
+                                    <!-- View Tasks Button -->
+                                    <div class="col-12 mb-2">
+                                        <a href="#" class="btn btn-primary w-100 rounded-2 fw-bold py-3 d-flex align-items-center justify-content-center" id="viewTasksBtn">
+                                            <i class="bi bi-list-task me-2 fs-5"></i>View My Tasks
+                                        </a>
+                                    </div>
+                                    <!-- Report Incident Button -->
+                                    <div class="col-6 mb-2">
+                                        <a href="#" class="btn btn-warning w-100 rounded-2 fw-bold py-2 d-flex align-items-center justify-content-center" id="reportIncidentBtn">
+                                            <i class="bi bi-exclamation-triangle me-2"></i>Report Incident
+                                        </a>
+                                    </div>
+                                    <!-- Report Impact Button -->
+                                    <div class="col-6 mb-2">
+                                        <a href="#" class="btn btn-success w-100 rounded-2 fw-bold py-2 d-flex align-items-center justify-content-center" id="reportImpactBtn">
+                                            <i class="bi bi-graph-up me-2"></i>Report Impact
+                                        </a>
+                                    </div>
+                                    <!-- Emergency Contact -->
+                                    <div class="col-12">
+                                        <a href="tel:+27210123456" class="btn btn-outline-primary w-100 rounded-2 fw-bold py-2 d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-telephone me-2"></i>Emergency Contact
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Tasks Panel -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-gold text-dark rounded-top-3 py-3">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="bi bi-activity me-2"></i>Recent Activity
+                                </h5>
+                            </div>
+                            <div class="card-body p-3">
+                                <!-- Recent Task 1 -->
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-success rounded-circle p-2 me-3 flex-shrink-0">
+                                        <i class="bi bi-check-lg text-white"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 fw-bold text-dark">Food Distribution</h6>
+                                        <small class="text-muted">Completed • 2 hours ago</small>
+                                        <div class="mt-1">
+                                            <span class="badge badge-completed">Completed</span>
+                                            <span class="priority-medium">Medium</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Recent Task 2 -->
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-primary rounded-circle p-2 me-3 flex-shrink-0">
+                                        <i class="bi bi-clock text-white"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 fw-bold text-dark">Medical Supply Delivery</h6>
+                                        <small class="text-muted">In Progress • Due tomorrow</small>
+                                        <div class="mt-1">
+                                            <span class="badge badge-in-progress">In Progress</span>
+                                            <span class="priority-high">High</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Recent Task 3 -->
+                                <div class="d-flex align-items-start">
+                                    <div class="bg-warning rounded-circle p-2 me-3 flex-shrink-0">
+                                        <i class="bi bi-exclamation-triangle text-white"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 fw-bold text-dark">Shelter Setup</h6>
+                                        <small class="text-muted">Pending • Starts in 2 days</small>
+                                        <div class="mt-1">
+                                            <span class="badge badge-pending">Pending</span>
+                                            <span class="priority-urgent">Urgent</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Tasks Section -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-gift-green text-white rounded-top-3 py-3">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="bi bi-calendar-week me-2"></i>Upcoming Tasks This Week
+                                </h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Task</th>
+                                                <th>Priority</th>
+                                                <th>Location</th>
+                                                <th>Due Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-bold">Medical Supply Delivery</div>
+                                                    <small class="text-muted">Deliver supplies to clinic</small>
+                                                </td>
+                                                <td><span class="priority-high">High</span></td>
+                                                <td>Downtown Clinic</td>
+                                                <td>@DateTime.Now.AddDays(1).ToString("MMM dd")</td>
+                                                <td><span class="badge badge-in-progress">In Progress</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="updateTaskProgress('TASK-001')">Update</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-bold">Shelter Setup</div>
+                                                    <small class="text-muted">Emergency shelter construction</small>
+                                                </td>
+                                                <td><span class="priority-urgent">Urgent</span></td>
+                                                <td>Community Center</td>
+                                                <td>@DateTime.Now.AddDays(2).ToString("MMM dd")</td>
+                                                <td><span class="badge badge-pending">Pending</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="startTask('TASK-002')">Start</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-bold">Food Distribution</div>
+                                                    <small class="text-muted">Weekly food package distribution</small>
+                                                </td>
+                                                <td><span class="priority-medium">Medium</span></td>
+                                                <td>Main Distribution Center</td>
+                                                <td>@DateTime.Now.AddDays(3).ToString("MMM dd")</td>
+                                                <td><span class="badge badge-pending">Pending</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="prepareTask('TASK-003')">Prepare</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column (4 units wide) -->
+            <div class="col-lg-4">
+
+                <!-- Performance Meter Visualization -->
+                <div class="card mb-4">
+                    <div class="card-header bg-helper-green text-white rounded-top-3 py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-graph-up me-2"></i>Performance Meter
+                        </h5>
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <!-- Circular Progress Indicator -->
+                        <div class="impact-circle mb-3" style="--rotation: @(Math.Min((Model.CompletedTasks * 100 / Math.Max(Model.TotalAssignedTasks, 1)) * 3.6, 360))">
+                            <div class="impact-circle-inner">
+                                <div class="fw-bold fs-2 text-helper-green">@(Model.TotalAssignedTasks > 0 ? ((Model.CompletedTasks * 100) / Model.TotalAssignedTasks) : 0)%</div>
+                                <small class="text-muted">Completion</small>
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0">
+                            <!-- Dynamic encouragement message based on completion rate -->
+                            @{
+                                var completionRate = Model.TotalAssignedTasks > 0 ? (Model.CompletedTasks * 100) / Model.TotalAssignedTasks : 0;
+                                if (completionRate >= 90)
+                                {
+                                    <text>Outstanding performance! 🌟</text>
+                                }
+                                else if (completionRate >= 75)
+                                {
+                                    <text>Great work! Keep it up! 💪</text>
+                                }
+                                else if (completionRate >= 50)
+                                {
+                                    <text>Good progress! You're doing well! ✨</text>
+                                }
+                                else
+                                {
+                                    <text>Keep going! Every task makes a difference! 🙌</text>
+                                }
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Urgent Tasks Panel -->
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark rounded-top-3 py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-exclamation-triangle me-2"></i>Urgent Tasks
+                        </h5>
+                    </div>
+                    <div class="card-body p-3">
+                        <!-- Urgent Task 1 -->
+                        <div class="urgent-task-item mb-3 p-3 rounded-3 bg-light-warning border border-warning">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold mb-0 text-dark">Emergency Shelter Setup</h6>
+                                <span class="badge badge-urgent">URGENT</span>
+                            </div>
+                            <p class="text-muted small mb-2">Setup temporary shelters for displaced families</p>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span><i class="bi bi-geo-alt me-1"></i>Community Center</span>
+                                <span><i class="bi bi-clock me-1"></i>Due: @DateTime.Now.AddDays(1).ToString("MMM dd")</span>
+                            </div>
+                            <button class="btn btn-warning btn-sm w-100 mt-2 fw-bold" onclick="startTask('TASK-002')">Start Task</button>
+                        </div>
+
+                        <!-- Urgent Task 2 -->
+                        <div class="urgent-task-item p-3 rounded-3 bg-light-warning border border-warning">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold mb-0 text-dark">Medical Supply Run</h6>
+                                <span class="badge badge-urgent">URGENT</span>
+                            </div>
+                            <p class="text-muted small mb-2">Deliver critical medical supplies to clinic</p>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span><i class="bi bi-geo-alt me-1"></i>Downtown Clinic</span>
+                                <span><i class="bi bi-clock me-1"></i>Due: Today</span>
+                            </div>
+                            <button class="btn btn-warning btn-sm w-100 mt-2 fw-bold" onclick="updateTaskProgress('TASK-001')">Update Progress</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources & Training Panel -->
+                <div class="card">
+                    <div class="card-header bg-success text-white rounded-top-3 py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-journal-bookmark me-2"></i>Resources & Training
+                        </h5>
+                    </div>
+                    <div class="card-body p-3">
+                        <!-- Resource Item 1 -->
+                        <div class="resource-item mb-3 p-3 rounded-3 bg-light">
+                            <h6 class="fw-bold text-gift-green mb-2">Safety Protocols</h6>
+                            <p class="text-muted small mb-2">Updated safety guidelines for field work</p>
+                            <button class="btn btn-outline-success btn-sm w-100">View Guide</button>
+                        </div>
+
+                        <!-- Resource Item 2 -->
+                        <div class="resource-item p-3 rounded-3 bg-light">
+                            <h6 class="fw-bold text-gift-green mb-2">New Training Available</h6>
+                            <p class="text-muted small mb-2">Emergency response training module</p>
+                            <button class="btn btn-outline-success btn-sm w-100">Start Training</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gift-green text-white mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-1 fw-bold">&copy; 2025 Gift of the Givers Foundation</p>
+            <p class="mb-0 opacity-75">Making a difference, one task at a time</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="profileModalLabel">My Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="profileForm">
+                        <!-- Personal Information Section -->
+                        <div class="profile-section">
+                            <h6 class="fw-bold text-helper-green mb-3">
+                                <i class="bi bi-person-vcard me-2"></i>Personal Information
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="helperFirstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="helperFirstName" value="John" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="helperLastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="helperLastName" value="Doe" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="helperEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="helperEmail" value="john.doe@example.com" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="helperPhone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="helperPhone" value="+27 12 345 6789">
+                                </div>
+                                <div class="col-12">
+                                    <label for="helperAddress" class="form-label">Address</label>
+                                    <textarea class="form-control" id="helperAddress" rows="2">123 Main Street, Johannesburg</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills & Qualifications Section -->
+                        <div class="profile-section">
+                            <h6 class="fw-bold text-helper-green mb-3">
+                                <i class="bi bi-award me-2"></i>Skills & Qualifications
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">Areas of Expertise</label>
+                                    <div class="mb-3">
+                                        <span class="skill-tag">First Aid Certified</span>
+                                        <span class="skill-tag">Emergency Response</span>
+                                        <span class="skill-tag">Logistics Management</span>
+                                        <span class="skill-tag">Community Outreach</span>
+                                        <span class="skill-tag">Crisis Counseling</span>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Add Skill</button>
+                                </div>
+                                <div class="col-12">
+                                    <label for="certifications" class="form-label">Certifications</label>
+                                    <textarea class="form-control" id="certifications" rows="3" placeholder="List your certifications and training...">First Aid Level 3, Emergency Response Training, Crisis Management Course</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Contact Section -->
+                        <div class="profile-section">
+                            <h6 class="fw-bold text-helper-green mb-3">
+                                <i class="bi bi-telephone me-2"></i>Emergency Contact
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="emergencyContactName" class="form-label">Contact Name</label>
+                                    <input type="text" class="form-control" id="emergencyContactName" value="Jane Doe">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="emergencyContactPhone" class="form-label">Contact Phone</label>
+                                    <input type="tel" class="form-control" id="emergencyContactPhone" value="+27 12 345 6789">
+                                </div>
+                                <div class="col-12">
+                                    <label for="emergencyContactRelationship" class="form-label">Relationship</label>
+                                    <input type="text" class="form-control" id="emergencyContactRelationship" value="Spouse">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferences Section -->
+                        <div class="profile-section">
+                            <h6 class="fw-bold text-helper-green mb-3">
+                                <i class="bi bi-gear me-2"></i>Preferences
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="preferredTasks" class="form-label">Preferred Task Types</label>
+                                    <select class="form-select" id="preferredTasks" multiple>
+                                        <option value="medical" selected>Medical Assistance</option>
+                                        <option value="logistics" selected>Logistics & Distribution</option>
+                                        <option value="construction">Construction & Setup</option>
+                                        <option value="counseling">Counseling & Support</option>
+                                        <option value="coordination">Coordination & Planning</option>
+                                    </select>
+                                    <small class="text-muted">Hold Ctrl/Cmd to select multiple options</small>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="receiveNotifications" checked>
+                                        <label class="form-check-label" for="receiveNotifications">
+                                            Receive task notifications via SMS/Email
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="saveProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Availability Modal -->
+    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="availabilityModalLabel">Set Your Availability</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="availabilityForm">
+                        <div class="row g-4">
+                            <!-- Weekly Availability -->
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Weekly Availability</h6>
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <div class="availability-day selected" data-day="monday">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="monday" checked>
+                                                <label class="form-check-label fw-bold" for="monday">
+                                                    Monday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="availability-day selected" data-day="tuesday">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="tuesday" checked>
+                                                <label class="form-check-label fw-bold" for="tuesday">
+                                                    Tuesday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="availability-day selected" data-day="wednesday">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="wednesday" checked>
+                                                <label class="form-check-label fw-bold" for="wednesday">
+                                                    Wednesday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="availability-day" data-day="thursday">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="thursday">
+                                                <label class="form-check-label fw-bold" for="thursday">
+                                                    Thursday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="availability-day" data-day="friday">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="friday">
+                                                <label class="form-check-label fw-bold" for="friday">
+                                                    Friday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="availability-day" data-day="saturday">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="saturday">
+                                                <label class="form-check-label fw-bold" for="saturday">
+                                                    Saturday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Time Slots -->
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Preferred Time Slots</h6>
+                                <div class="row g-2">
+                                    <div class="col-md-3">
+                                        <div class="time-slot selected">06:00 - 08:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot selected">08:00 - 10:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot">10:00 - 12:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot">12:00 - 14:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot">14:00 - 16:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot">16:00 - 18:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot">18:00 - 20:00</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="time-slot">20:00 - 22:00</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Special Availability -->
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Special Availability</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="availableFrom" class="form-label">Available From Date</label>
+                                        <input type="date" class="form-control" id="availableFrom">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="availableUntil" class="form-label">Available Until Date</label>
+                                        <input type="date" class="form-control" id="availableUntil">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="emergencyCalls">
+                                            <label class="form-check-label" for="emergencyCalls">
+                                                Available for emergency call-outs outside scheduled hours
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Location Preferences -->
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Location Preferences</h6>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="preferredLocations" class="form-label">Preferred Work Locations</label>
+                                        <textarea class="form-control" id="preferredLocations" rows="3" placeholder="List areas or specific locations where you prefer to work...">Johannesburg CBD, Soweto, Alexandra Township</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="maxTravelDistance" class="form-label">Maximum Travel Distance (km)</label>
+                                        <input type="number" class="form-control" id="maxTravelDistance" value="50" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="saveAvailabilityBtn">Save Availability</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Reporting Modal -->
+    <div class="modal fade" id="incidentModal" tabindex="-1" aria-labelledby="incidentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="incidentModalLabel">Report Incident</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="incidentForm">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Incident Type</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="incident-type-card selected" data-type="medical">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="radio" name="incidentType" id="typeMedical" value="medical" checked>
+                                                <label class="form-check-label fw-bold" for="typeMedical">
+                                                    Medical Emergency
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Health-related incidents, injuries, medical needs</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="incident-type-card" data-type="safety">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="radio" name="incidentType" id="typeSafety" value="safety">
+                                                <label class="form-check-label fw-bold" for="typeSafety">
+                                                    Safety Hazard
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Environmental hazards, unsafe conditions</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Incident Details</h6>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="incidentTitle" class="form-label">Incident Title</label>
+                                        <input type="text" class="form-control" id="incidentTitle" placeholder="Brief description of the incident" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="incidentDescription" class="form-label">Detailed Description</label>
+                                        <textarea class="form-control" id="incidentDescription" rows="4" placeholder="Provide detailed information about the incident..." required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Location & Severity</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="incidentLocation" class="form-label">Location</label>
+                                        <input type="text" class="form-control" id="incidentLocation" placeholder="Where did this occur?" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Severity Level</label>
+                                        <div class="row g-2">
+                                            <div class="col-4">
+                                                <div class="severity-level" data-severity="low">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="severity" id="severityLow" value="low">
+                                                        <label class="form-check-label fw-bold" for="severityLow">Low</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="severity-level selected" data-severity="medium">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="severity" id="severityMedium" value="medium" checked>
+                                                        <label class="form-check-label fw-bold" for="severityMedium">Medium</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="severity-level" data-severity="high">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="severity" id="severityHigh" value="high">
+                                                        <label class="form-check-label fw-bold" for="severityHigh">High</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Emergency Response</h6>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="immediateActions" class="form-label">Immediate Actions Taken</label>
+                                        <textarea class="form-control" id="immediateActions" rows="3" placeholder="Describe any immediate actions you've taken..."></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="emergencyResponse" required>
+                                            <label class="form-check-label" for="emergencyResponse">
+                                                This incident requires immediate emergency response
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="submitIncidentBtn">Submit Incident Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Reporting Modal -->
+    <div class="modal fade" id="impactModal" tabindex="-1" aria-labelledby="impactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="impactModalLabel">Report Impact & Progress</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="impactForm">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Task Information</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="taskSelect" class="form-label">Select Task</label>
+                                        <select class="form-select" id="taskSelect" required>
+                                            <option value="">Choose a task...</option>
+                                            <option value="medical-delivery">Medical Supply Delivery</option>
+                                            <option value="shelter-setup">Shelter Setup</option>
+                                            <option value="food-distribution">Food Distribution</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="impactDate" class="form-label">Date of Activity</label>
+                                        <input type="date" class="form-control" id="impactDate" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Impact Metrics</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="impact-metric-card">
+                                            <label for="peopleHelped" class="form-label fw-bold">People Helped</label>
+                                            <input type="number" class="form-control" id="peopleHelped" min="0" placeholder="0" required>
+                                            <small class="text-muted">Total individuals assisted</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="impact-metric-card">
+                                            <label for="familiesServed" class="form-label fw-bold">Families Served</label>
+                                            <input type="number" class="form-control" id="familiesServed" min="0" placeholder="0">
+                                            <small class="text-muted">Number of families supported</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="impact-metric-card">
+                                            <label for="hoursWorked" class="form-label fw-bold">Hours Worked</label>
+                                            <input type="number" class="form-control" id="hoursWorked" min="0" step="0.5" placeholder="0" required>
+                                            <small class="text-muted">Total volunteer hours</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Activity Details</h6>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="activityDescription" class="form-label">Activity Description</label>
+                                        <textarea class="form-control" id="activityDescription" rows="3" placeholder="Describe the activity and its purpose..." required></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="successStories" class="form-label">Success Stories & Observations</label>
+                                        <textarea class="form-control" id="successStories" rows="4" placeholder="Share success stories, positive outcomes, or meaningful observations..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-helper-green mb-3">Photo Documentation</h6>
+                                <div class="photo-upload-area" id="photoUploadArea">
+                                    <i class="bi bi-cloud-arrow-up fs-1 text-muted mb-3"></i>
+                                    <p class="text-muted mb-2">Click to upload photos or drag and drop</p>
+                                    <small class="text-muted">Supports JPG, PNG (Max 5MB each)</small>
+                                    <input type="file" id="impactPhotos" accept="image/*" multiple style="display: none;">
+                                </div>
+                                <div id="photoPreview" class="mt-3"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="submitImpactBtn">Submit Impact Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Management Modal -->
+    <div class="modal fade" id="tasksModal" tabindex="-1" aria-labelledby="tasksModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="tasksModalLabel">My Tasks & Management</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <!-- Task Filters -->
+                    <div class="task-filter">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">Filter by Status</label>
+                                <select class="form-select" id="taskStatusFilter">
+                                    <option value="all">All Tasks</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">Filter by Priority</label>
+                                <select class="form-select" id="taskPriorityFilter">
+                                    <option value="all">All Priorities</option>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">Sort By</label>
+                                <select class="form-select" id="taskSortBy">
+                                    <option value="due-date">Due Date</option>
+                                    <option value="priority">Priority</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">&nbsp;</label>
+                                <button class="btn btn-outline-primary w-100" id="exportTasksBtn">
+                                    <i class="bi bi-download me-2"></i>Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task Statistics -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="fw-bold text-helper-green">@Model.TotalAssignedTasks</h3>
+                                    <p class="text-muted mb-0">Total Assigned</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="fw-bold text-success">@Model.CompletedTasks</h3>
+                                    <p class="text-muted mb-0">Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="fw-bold text-warning">@Model.PendingTasks</h3>
+                                    <p class="text-muted mb-0">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="fw-bold text-gold">@(Model.TotalAssignedTasks > 0 ? ((Model.CompletedTasks * 100) / Model.TotalAssignedTasks) : 0)%</h3>
+                                    <p class="text-muted mb-0">Completion Rate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task List -->
+                    <div id="taskList">
+                        <!-- Task Item 1 -->
+                        <div class="task-item task-item-urgent" data-status="in-progress" data-priority="urgent" data-due="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="fw-bold text-helper-green mb-0 me-3">Medical Supply Delivery - Downtown Clinic</h6>
+                                        <span class="badge badge-in-progress">In Progress</span>
+                                        <span class="badge badge-urgent ms-2">URGENT</span>
+                                    </div>
+                                    <p class="text-muted mb-2">Deliver critical medical supplies including vaccines, bandages, and emergency kits</p>
+                                    <div class="d-flex align-items-center text-muted small mb-2">
+                                        <i class="bi bi-geo-alt me-1"></i>
+                                        <span class="me-3">Downtown Clinic, 123 Medical Street</span>
+                                        <i class="bi bi-clock me-1"></i>
+                                        <span class="me-3">Due: @DateTime.Now.AddDays(1).ToString("MMM dd, yyyy")</span>
+                                        <i class="bi bi-person me-1"></i>
+                                        <span>Assigned to: You</span>
+                                    </div>
+                                    <div class="progress task-progress mb-2">
+                                        <div class="progress-bar bg-primary" style="width: 75%"></div>
+                                    </div>
+                                    <small class="text-muted">75% completed • Last updated: 2 hours ago</small>
+                                </div>
+                                <div class="text-end ms-3">
+                                    <button class="btn btn-sm btn-outline-primary mb-1" onclick="updateTaskProgress('TASK-001')">
+                                        <i class="bi bi-arrow-clockwise me-1"></i>Update
+                                    </button>
+                                    <br>
+                                    <button class="btn btn-sm btn-outline-success" onclick="completeTask('TASK-001')">
+                                        <i class="bi bi-check-circle me-1"></i>Complete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Task Item 2 -->
+                        <div class="task-item" data-status="pending" data-priority="high" data-due="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="fw-bold text-helper-green mb-0 me-3">Emergency Shelter Setup - Community Center</h6>
+                                        <span class="badge badge-pending">Pending</span>
+                                        <span class="priority-high ms-2">High Priority</span>
+                                    </div>
+                                    <p class="text-muted mb-2">Setup temporary shelters for families displaced by recent flooding</p>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class="bi bi-geo-alt me-1"></i>
+                                        <span class="me-3">Community Center, 456 Hope Avenue</span>
+                                        <i class="bi bi-clock me-1"></i>
+                                        <span class="me-3">Due: @DateTime.Now.AddDays(2).ToString("MMM dd, yyyy")</span>
+                                        <i class="bi bi-people me-1"></i>
+                                        <span>Team: 4 helpers</span>
+                                    </div>
+                                </div>
+                                <div class="text-end ms-3">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="startTask('TASK-002')">
+                                        <i class="bi bi-play-circle me-1"></i>Start
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Task Item 3 -->
+                        <div class="task-item task-item-completed" data-status="completed" data-priority="medium" data-due="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="fw-bold text-helper-green mb-0 me-3">Food Distribution - Main Center</h6>
+                                        <span class="badge badge-completed">Completed</span>
+                                        <span class="priority-medium ms-2">Medium Priority</span>
+                                    </div>
+                                    <p class="text-muted mb-2">Distributed food packages to 150 families in the downtown area</p>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class="bi bi-geo-alt me-1"></i>
+                                        <span class="me-3">Main Distribution Center</span>
+                                        <i class="bi bi-clock me-1"></i>
+                                        <span class="me-3">Completed: @DateTime.Now.AddDays(-1).ToString("MMM dd, yyyy")</span>
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        <span>150 families served</span>
+                                    </div>
+                                </div>
+                                <div class="text-end ms-3">
+                                    <button class="btn btn-sm btn-outline-success" onclick="viewTaskDetails('TASK-003')">
+                                        <i class="bi bi-eye me-1"></i>Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Helper Dashboard Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ------------------------------
+            // Modal Initialization
+            // ------------------------------
+            const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+            const availabilityModal = new bootstrap.Modal(document.getElementById('availabilityModal'));
+            const incidentModal = new bootstrap.Modal(document.getElementById('incidentModal'));
+            const impactModal = new bootstrap.Modal(document.getElementById('impactModal'));
+            const tasksModal = new bootstrap.Modal(document.getElementById('tasksModal'));
+
+            // ------------------------------
+            // Navigation Links
+            // ------------------------------
+            document.getElementById('profileLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                profileModal.show();
+            });
+
+            document.getElementById('availabilityLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                availabilityModal.show();
+            });
+
+            document.getElementById('tasksLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                tasksModal.show();
+            });
+
+            // ------------------------------
+            // Quick Actions
+            // ------------------------------
+            document.getElementById('reportIncidentBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                incidentModal.show();
+            });
+
+            document.getElementById('reportImpactBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                impactModal.show();
+            });
+
+            document.getElementById('viewTasksBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                tasksModal.show();
+            });
+
+            // ------------------------------
+            // Profile Modal Functionality
+            // ------------------------------
+            const saveProfileBtn = document.getElementById('saveProfileBtn');
+
+            if (saveProfileBtn) {
+                saveProfileBtn.addEventListener('click', function() {
+                    const firstName = document.getElementById('helperFirstName').value;
+                    const lastName = document.getElementById('helperLastName').value;
+                    const email = document.getElementById('helperEmail').value;
+
+                    if (!firstName || !lastName || !email) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+
+                    // Simulate saving profile
+                    alert('Profile updated successfully!');
+                    profileModal.hide();
+                });
+            }
+
+            // ------------------------------
+            // Availability Modal Functionality
+            // ------------------------------
+            const availabilityDays = document.querySelectorAll('.availability-day');
+            const timeSlots = document.querySelectorAll('.time-slot');
+            const saveAvailabilityBtn = document.getElementById('saveAvailabilityBtn');
+
+            // Day selection
+            availabilityDays.forEach(day => {
+                const checkbox = day.querySelector('input[type="checkbox"]');
+
+                day.addEventListener('click', function() {
+                    checkbox.checked = !checkbox.checked;
+                    if (checkbox.checked) {
+                        this.classList.add('selected');
+                    } else {
+                        this.classList.remove('selected');
+                    }
+                });
+            });
+
+            // Time slot selection
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+
+            // Save availability
+            if (saveAvailabilityBtn) {
+                saveAvailabilityBtn.addEventListener('click', function() {
+                    const selectedDays = Array.from(document.querySelectorAll('.availability-day input[type="checkbox"]:checked'));
+                    const selectedSlots = Array.from(document.querySelectorAll('.time-slot.selected'));
+
+                    if (selectedDays.length === 0) {
+                        alert('Please select at least one day of availability.');
+                        return;
+                    }
+
+                    if (selectedSlots.length === 0) {
+                        alert('Please select at least one time slot.');
+                        return;
+                    }
+
+                    // Simulate saving availability
+                    alert('Availability saved successfully! You will be assigned tasks based on your preferred schedule.');
+                    availabilityModal.hide();
+                });
+            }
+
+            // ------------------------------
+            // Incident Reporting Functionality
+            // ------------------------------
+            const incidentTypeCards = document.querySelectorAll('.incident-type-card');
+            const severityLevels = document.querySelectorAll('.severity-level');
+            const submitIncidentBtn = document.getElementById('submitIncidentBtn');
+
+            // Incident type selection
+            incidentTypeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    incidentTypeCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                });
+            });
+
+            // Severity level selection
+            severityLevels.forEach(level => {
+                level.addEventListener('click', function() {
+                    severityLevels.forEach(l => l.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                });
+            });
+
+            // Submit incident report
+            if (submitIncidentBtn) {
+                submitIncidentBtn.addEventListener('click', function() {
+                    const incidentTitle = document.getElementById('incidentTitle').value;
+                    const incidentType = document.querySelector('input[name="incidentType"]:checked').value;
+                    const severity = document.querySelector('input[name="severity"]:checked').value;
+
+                    if (!incidentTitle) {
+                        alert('Please provide an incident title.');
+                        return;
+                    }
+
+                    // Simulate submission
+                    alert(`Incident report submitted successfully!\n\nTitle: ${incidentTitle}\nType: ${incidentType}\nSeverity: ${severity}\n\nOur emergency response team has been notified.`);
+                    incidentModal.hide();
+
+                    // Add to recent activity
+                    addToRecentActivity('incident', incidentTitle, severity);
+                });
+            }
+
+            // ------------------------------
+            // Impact Reporting Functionality
+            // ------------------------------
+            const photoUploadArea = document.getElementById('photoUploadArea');
+            const impactPhotos = document.getElementById('impactPhotos');
+            const submitImpactBtn = document.getElementById('submitImpactBtn');
+
+            // Photo upload
+            if (photoUploadArea && impactPhotos) {
+                photoUploadArea.addEventListener('click', function() {
+                    impactPhotos.click();
+                });
+
+                impactPhotos.addEventListener('change', function(e) {
+                    const files = e.target.files;
+                    const preview = document.getElementById('photoPreview');
+                    preview.innerHTML = '';
+
+                    for (let file of files) {
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                img.className = 'photo-preview';
+                                preview.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+            }
+
+            // Submit impact report
+            if (submitImpactBtn) {
+                submitImpactBtn.addEventListener('click', function() {
+                    const taskSelect = document.getElementById('taskSelect').value;
+                    const peopleHelped = document.getElementById('peopleHelped').value;
+                    const hoursWorked = document.getElementById('hoursWorked').value;
+
+                    if (!taskSelect || !peopleHelped || !hoursWorked) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+
+                    // Simulate submission
+                    alert(`Impact report submitted successfully!\n\nThank you for documenting your humanitarian work. This data helps us measure our collective impact.`);
+                    impactModal.hide();
+
+                    // Add to recent activity
+                    addToRecentActivity('impact', `Helped ${peopleHelped} people`, `${hoursWorked} hours`);
+                });
+            }
+
+            // ------------------------------
+            // Tasks Management Functionality
+            // ------------------------------
+            const taskStatusFilter = document.getElementById('taskStatusFilter');
+            const taskPriorityFilter = document.getElementById('taskPriorityFilter');
+            const taskSortBy = document.getElementById('taskSortBy');
+            const exportTasksBtn = document.getElementById('exportTasksBtn');
+
+            // Task filtering
+            if (taskStatusFilter && taskPriorityFilter && taskSortBy) {
+                taskStatusFilter.addEventListener('change', filterTasks);
+                taskPriorityFilter.addEventListener('change', filterTasks);
+                taskSortBy.addEventListener('change', filterTasks);
+            }
+
+            function filterTasks() {
+                const statusFilter = taskStatusFilter.value;
+                const priorityFilter = taskPriorityFilter.value;
+                const sortBy = taskSortBy.value;
+                const taskItems = document.querySelectorAll('.task-item');
+
+                taskItems.forEach(item => {
+                    const itemStatus = item.dataset.status;
+                    const itemPriority = item.dataset.priority;
+                    let showItem = true;
+
+                    // Status filter
+                    if (statusFilter !== 'all' && itemStatus !== statusFilter) {
+                        showItem = false;
+                    }
+
+                    // Priority filter
+                    if (priorityFilter !== 'all' && itemPriority !== priorityFilter) {
+                        showItem = false;
+                    }
+
+                    if (showItem) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Sort tasks (simplified implementation)
+                // In a real app, you would implement proper sorting logic
+            }
+
+            // Export tasks
+            if (exportTasksBtn) {
+                exportTasksBtn.addEventListener('click', function() {
+                    alert('Your task history is being prepared for export. You will receive an email with the download link shortly.');
+                });
+            }
+
+            // ------------------------------
+            // Task Action Functions
+            // ------------------------------
+            window.updateTaskProgress = function(taskId) {
+                alert(`Updating progress for task: ${taskId}\n\nRedirecting to task update form...`);
+                // In real implementation: window.location.href = '/Helper/TaskUpdate/' + taskId;
+            };
+
+            window.startTask = function(taskId) {
+                alert(`Starting task: ${taskId}\n\nTask status updated to 'In Progress'.`);
+                // Update UI accordingly
+                const taskElement = document.querySelector(`[onclick="startTask('${taskId}')"]`).closest('.task-item');
+                if (taskElement) {
+                    taskElement.querySelector('.badge').className = 'badge badge-in-progress';
+                    taskElement.querySelector('.badge').textContent = 'In Progress';
+                }
+            };
+
+            window.completeTask = function(taskId) {
+                alert(`Completing task: ${taskId}\n\nTask marked as completed. Thank you for your service!`);
+                // Update UI accordingly
+                const taskElement = document.querySelector(`[onclick="completeTask('${taskId}')"]`).closest('.task-item');
+                if (taskElement) {
+                    taskElement.querySelector('.badge').className = 'badge badge-completed';
+                    taskElement.querySelector('.badge').textContent = 'Completed';
+                    taskElement.classList.add('task-item-completed');
+                }
+            };
+
+            window.viewTaskDetails = function(taskId) {
+                alert(`Viewing details for task: ${taskId}\n\nRedirecting to task details page...`);
+                // In real implementation: window.location.href = '/Helper/TaskDetails/' + taskId;
+            };
+
+            window.prepareTask = function(taskId) {
+                alert(`Preparing for task: ${taskId}\n\nOpening preparation checklist...`);
+            };
+
+            // ------------------------------
+            // Helper Functions
+            // ------------------------------
+            function addToRecentActivity(type, title, metric) {
+                const recentActivity = document.querySelector('.card-body.p-3');
+                if (recentActivity) {
+                    const newActivity = document.createElement('div');
+                    newActivity.className = 'd-flex align-items-start mb-3';
+
+                    let iconClass, bgClass, text;
+                    if (type === 'incident') {
+                        iconClass = 'bi-exclamation-triangle';
+                        bgClass = 'bg-warning';
+                        text = `Incident Reported: ${title}`;
+                    } else {
+                        iconClass = 'bi-graph-up';
+                        bgClass = 'bg-success';
+                        text = `Impact Reported: ${title}`;
+                    }
+
+                    newActivity.innerHTML = `
+                        <div class="${bgClass} rounded-circle p-2 me-3 flex-shrink-0">
+                            <i class="bi ${iconClass} text-white"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 fw-bold text-dark">${text}</h6>
+                            <small class="text-muted">Just now • ${metric}</small>
+                        </div>
+                    `;
+                    recentActivity.insertBefore(newActivity, recentActivity.firstChild);
+                }
+            }
+
+            // Set current date for forms
+            const today = new Date();
+            document.getElementById('availableFrom').value = today.toISOString().slice(0, 10);
+            document.getElementById('availableUntil').value = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+            document.getElementById('impactDate').value = today.toISOString().slice(0, 10);
+            document.getElementById('incidentDate').value = today.toISOString().slice(0, 16);
+
+            // Performance meter animation
+            const performanceCircle = document.querySelector('.impact-circle');
+            if (performanceCircle) {
+                setTimeout(() => {
+                    performanceCircle.style.transition = 'all 1.5s ease-in-out';
+                }, 500);
+            }
+
+            // Urgent task highlight animation
+            const urgentTasks = document.querySelectorAll('.urgent-task-item');
+            urgentTasks.forEach(task => {
+                setInterval(() => {
+                    task.classList.toggle('border-warning');
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
