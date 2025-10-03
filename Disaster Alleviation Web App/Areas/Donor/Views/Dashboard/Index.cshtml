@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Gift of the Givers</title>
+    <title>@ViewData["Title"]</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
@@ -229,6 +229,28 @@
                 box-shadow: 0 0 0 0.25rem rgba(0, 103, 71, 0.25);
             }
 
+        /* Donation Type Styles */
+        .donation-type-btn {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            height: 100%;
+        }
+
+            .donation-type-btn:hover {
+                border-color: var(--gift-green);
+                transform: translateY(-2px);
+            }
+
+            .donation-type-btn.selected {
+                border-color: var(--gift-green);
+                background-color: rgba(0, 103, 71, 0.1);
+            }
+
         /* Recurring Donations Modal Styles */
         .recurring-option {
             border: 2px solid var(--border-color);
@@ -253,8 +275,8 @@
                 margin-right: 10px;
             }
 
-        /* Clothing Donation Styles */
-        .clothing-category {
+        /* Category Selection Styles */
+        .category-option {
             border: 2px solid var(--border-color);
             border-radius: 10px;
             padding: 15px;
@@ -263,37 +285,17 @@
             transition: all 0.3s ease;
         }
 
-            .clothing-category:hover {
+            .category-option:hover {
                 border-color: var(--gift-gold);
                 background-color: rgba(212, 175, 55, 0.05);
             }
 
-            .clothing-category.selected {
+            .category-option.selected {
                 border-color: var(--gift-gold);
                 background-color: rgba(212, 175, 55, 0.1);
             }
 
-        .donation-type-btn {
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-            .donation-type-btn:hover {
-                border-color: var(--gift-green);
-                transform: translateY(-2px);
-            }
-
-            .donation-type-btn.selected {
-                border-color: var(--gift-green);
-                background-color: rgba(0, 103, 71, 0.1);
-            }
-
-        .clothing-item {
+        .item-card {
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 10px;
@@ -326,6 +328,14 @@
             border-left-color: var(--gift-gold);
         }
 
+        .history-item-food {
+            border-left-color: #28a745;
+        }
+
+        .history-item-medical {
+            border-left-color: #dc3545;
+        }
+
         .history-item-recurring {
             border-left-color: var(--gift-green-light);
         }
@@ -354,8 +364,17 @@
         <div class="container">
             <!-- Brand Logo and Name -->
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <img src="/images/logo.png" alt="Gift Of The Givers Foundation" height="40" class="me-2">
-                <span class="fw-bold text-gift-green">Gift of the Givers</span>
+                <img src="https://giftofthegivers.org/wp-content/uploads/2024/01/logo.png"
+                     alt="Gift Of The Givers Foundation"
+                     height="40"
+                     class="me-2"
+                     onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';">
+
+                <!-- Fallback text logo -->
+                <div id="logoFallback" style="display: none;">
+                    <span class="fw-bold text-gift-green fs-4">Gift of the Givers</span>
+                </div>
+                
             </a>
 
             <!-- Mobile Menu Toggle -->
@@ -542,13 +561,25 @@
                                             <div class="col-6">
                                                 <div class="donation-type-btn selected" data-type="monetary">
                                                     <i class="bi bi-cash-coin fs-4 text-gift-green mb-2"></i>
-                                                    <div class="fw-bold">Monetary Donation</div>
+                                                    <div class="fw-bold">Monetary</div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="donation-type-btn" data-type="clothing">
                                                     <i class="bi bi-bag-heart fs-4 text-gift-green mb-2"></i>
-                                                    <div class="fw-bold">Clothing Donation</div>
+                                                    <div class="fw-bold">Clothing</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="donation-type-btn" data-type="food">
+                                                    <i class="bi bi-basket fs-4 text-gift-green mb-2"></i>
+                                                    <div class="fw-bold">Food</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="donation-type-btn" data-type="medical">
+                                                    <i class="bi bi-heart-pulse fs-4 text-gift-green mb-2"></i>
+                                                    <div class="fw-bold">Medical</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -565,6 +596,20 @@
                                     <div class="col-12 mb-2" id="clothingDonationSection" style="display: none;">
                                         <a href="#" class="btn btn-gold w-100 rounded-2 fw-bold py-3 d-flex align-items-center justify-content-center" id="donateClothesBtn">
                                             <i class="bi bi-bag-heart me-2 fs-5"></i>Donate Clothes
+                                        </a>
+                                    </div>
+
+                                    <!-- Food Donation Button -->
+                                    <div class="col-12 mb-2" id="foodDonationSection" style="display: none;">
+                                        <a href="#" class="btn btn-gold w-100 rounded-2 fw-bold py-3 d-flex align-items-center justify-content-center" id="donateFoodBtn">
+                                            <i class="bi bi-basket me-2 fs-5"></i>Donate Food
+                                        </a>
+                                    </div>
+
+                                    <!-- Medical Supplies Donation Button -->
+                                    <div class="col-12 mb-2" id="medicalDonationSection" style="display: none;">
+                                        <a href="#" class="btn btn-gold w-100 rounded-2 fw-bold py-3 d-flex align-items-center justify-content-center" id="donateMedicalBtn">
+                                            <i class="bi bi-heart-pulse me-2 fs-5"></i>Donate Medical Supplies
                                         </a>
                                     </div>
 
@@ -844,6 +889,8 @@
                                     <option value="all">All Donations</option>
                                     <option value="monetary">Monetary</option>
                                     <option value="clothing">Clothing</option>
+                                    <option value="food">Food</option>
+                                    <option value="medical">Medical</option>
                                     <option value="recurring">Recurring</option>
                                 </select>
                             </div>
@@ -923,8 +970,62 @@
                             </div>
                         </div>
 
+                        <!-- Food Donation -->
+                        <div class="history-item history-item-food" data-type="food" data-date="@DateTime.Now.AddDays(-10).ToString("yyyy-MM-dd")">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="fw-bold text-success mb-0 me-3">Food Parcel Drive</h6>
+                                        <span class="badge bg-success donation-badge">Completed</span>
+                                        <span class="badge bg-success donation-badge ms-2">Food</span>
+                                    </div>
+                                    <p class="text-muted mb-2">Emergency food parcels for drought-affected communities</p>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class="bi bi-calendar me-1"></i>
+                                        <span class="me-3">@DateTime.Now.AddDays(-10).ToString("MMM dd, yyyy")</span>
+                                        <i class="bi bi-basket me-1"></i>
+                                        <span class="me-3">25 Food Parcels</span>
+                                        <i class="bi bi-truck me-1"></i>
+                                        <span>Delivered</span>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <button class="btn btn-sm btn-outline-gold" onclick="viewFoodDetails('FOOD-00789')">
+                                        <i class="bi bi-list-ul me-1"></i>Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical Supplies Donation -->
+                        <div class="history-item history-item-medical" data-type="medical" data-date="@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="fw-bold text-danger mb-0 me-3">Medical Supplies Drive</h6>
+                                        <span class="badge bg-success donation-badge">Completed</span>
+                                        <span class="badge bg-danger donation-badge ms-2">Medical</span>
+                                    </div>
+                                    <p class="text-muted mb-2">Essential medical supplies for rural clinics</p>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class="bi bi-calendar me-1"></i>
+                                        <span class="me-3">@DateTime.Now.AddDays(-15).ToString("MMM dd, yyyy")</span>
+                                        <i class="bi bi-heart-pulse me-1"></i>
+                                        <span class="me-3">Medical Kits</span>
+                                        <i class="bi bi-truck me-1"></i>
+                                        <span>Distributed</span>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <button class="btn btn-sm btn-outline-gold" onclick="viewMedicalDetails('MED-00321')">
+                                        <i class="bi bi-list-ul me-1"></i>Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Recurring Donation -->
-                        <div class="history-item history-item-recurring" data-type="recurring" data-date="@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")">
+                        <div class="history-item history-item-recurring" data-type="recurring" data-date="@DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd")">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center mb-2">
@@ -935,7 +1036,7 @@
                                     <p class="text-muted mb-2">Monthly contribution to medical supplies for rural clinics</p>
                                     <div class="d-flex align-items-center text-muted small">
                                         <i class="bi bi-calendar me-1"></i>
-                                        <span class="me-3">Started @DateTime.Now.AddDays(-15).ToString("MMM dd, yyyy")</span>
+                                        <span class="me-3">Started @DateTime.Now.AddDays(-30).ToString("MMM dd, yyyy")</span>
                                         <i class="bi bi-arrow-repeat me-1"></i>
                                         <span class="me-3">Monthly</span>
                                         <i class="bi bi-cash-coin me-1"></i>
@@ -945,33 +1046,6 @@
                                 <div class="text-end">
                                     <button class="btn btn-sm btn-outline-gold" onclick="manageRecurring('REC-00789')">
                                         <i class="bi bi-gear me-1"></i>Manage
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Older Monetary Donation -->
-                        <div class="history-item" data-type="monetary" data-date="@DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd")">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <h6 class="fw-bold text-gift-green mb-0 me-3">Food Aid Program</h6>
-                                        <span class="badge bg-success donation-badge">Completed</span>
-                                        <span class="badge bg-primary donation-badge ms-2">Monetary</span>
-                                    </div>
-                                    <p class="text-muted mb-2">Emergency food parcels for drought-affected communities</p>
-                                    <div class="d-flex align-items-center text-muted small">
-                                        <i class="bi bi-calendar me-1"></i>
-                                        <span class="me-3">@DateTime.Now.AddDays(-30).ToString("MMM dd, yyyy")</span>
-                                        <i class="bi bi-cash-coin me-1"></i>
-                                        <span class="me-3">R 1,000.00</span>
-                                        <i class="bi bi-receipt me-1"></i>
-                                        <span>REF-00105</span>
-                                    </div>
-                                </div>
-                                <div class="text-end">
-                                    <button class="btn btn-sm btn-outline-gold" onclick="viewReceipt('REF-00105')">
-                                        <i class="bi bi-receipt me-1"></i>Receipt
                                     </button>
                                 </div>
                             </div>
@@ -1145,7 +1219,7 @@
                                 <h6 class="fw-bold text-gift-green mb-3">Select Clothing Categories</h6>
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <div class="clothing-category" data-category="mens">
+                                        <div class="category-option" data-category="mens">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="categoryMens" value="mens">
                                                 <label class="form-check-label fw-bold" for="categoryMens">
@@ -1156,7 +1230,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="clothing-category" data-category="womens">
+                                        <div class="category-option" data-category="womens">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="categoryWomens" value="womens">
                                                 <label class="form-check-label fw-bold" for="categoryWomens">
@@ -1167,7 +1241,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="clothing-category" data-category="childrens">
+                                        <div class="category-option" data-category="childrens">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="categoryChildrens" value="childrens">
                                                 <label class="form-check-label fw-bold" for="categoryChildrens">
@@ -1178,7 +1252,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="clothing-category" data-category="babies">
+                                        <div class="category-option" data-category="babies">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="categoryBabies" value="babies">
                                                 <label class="form-check-label fw-bold" for="categoryBabies">
@@ -1215,7 +1289,7 @@
                                         <label for="preferredDate" class="form-label">Preferred Date</label>
                                         <input type="date" class="form-control" id="preferredDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
                                     </div>
-                                    <div class="col-12" id="collectionAddressSection">
+                                    <div class="col-12" id="collectionAddressSection" style="display: none;">
                                         <label for="collectionAddress" class="form-label">Collection Address</label>
                                         <textarea class="form-control" id="collectionAddress" rows="2" placeholder="Enter your address for collection"></textarea>
                                     </div>
@@ -1241,10 +1315,256 @@
         </div>
     </div>
 
+    <!-- Food Donation Modal -->
+    <div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="foodModalLabel">Donate Food</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="foodForm">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Select Food Categories</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="non-perishable">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryNonPerishable" value="non-perishable">
+                                                <label class="form-check-label fw-bold" for="categoryNonPerishable">
+                                                    Non-Perishable Food
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Canned goods, pasta, rice, etc.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="perishable">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryPerishable" value="perishable">
+                                                <label class="form-check-label fw-bold" for="categoryPerishable">
+                                                    Perishable Food
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Fresh fruits, vegetables, dairy</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="baby-food">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryBabyFood" value="baby-food">
+                                                <label class="form-check-label fw-bold" for="categoryBabyFood">
+                                                    Baby Food & Formula
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Infant nutrition products</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="ready-meals">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryReadyMeals" value="ready-meals">
+                                                <label class="form-check-label fw-bold" for="categoryReadyMeals">
+                                                    Ready-to-Eat Meals
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Prepared meals, MREs</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Food Items Details</h6>
+                                <div id="foodItemsContainer">
+                                    <!-- Dynamic food items will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-outline-gold w-100 mt-2" id="addMoreFoodBtn">
+                                    <i class="bi bi-plus-circle me-1"></i>Add More Food Items
+                                </button>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Storage & Delivery Information</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="foodStorageType" class="form-label">Storage Type</label>
+                                        <select class="form-select" id="foodStorageType">
+                                            <option value="shelf-stable">Shelf Stable</option>
+                                            <option value="refrigerated">Refrigerated</option>
+                                            <option value="frozen">Frozen</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="foodExpiryDate" class="form-label">Expiry Date</label>
+                                        <input type="date" class="form-control" id="foodExpiryDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="foodDeliveryType" class="form-label">Delivery Type</label>
+                                        <select class="form-select" id="foodDeliveryType">
+                                            <option value="dropoff">I will drop off</option>
+                                            <option value="collection">Schedule collection</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="foodPreferredDate" class="form-label">Preferred Date</label>
+                                        <input type="date" class="form-control" id="foodPreferredDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="col-12" id="foodCollectionAddressSection" style="display: none;">
+                                        <label for="foodCollectionAddress" class="form-label">Collection Address</label>
+                                        <textarea class="form-control" id="foodCollectionAddress" rows="2" placeholder="Enter your address for collection"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="foodTerms" required>
+                                    <label class="form-check-label" for="foodTerms">
+                                        I confirm that all donated food items are within their expiry dates and in good condition. Perishable items will be properly stored until collection.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="confirmFoodBtn">Submit Food Donation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Supplies Donation Modal -->
+    <div class="modal fade" id="medicalModal" tabindex="-1" aria-labelledby="medicalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="medicalModalLabel">Donate Medical Supplies</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="medicalForm">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Select Medical Categories</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="first-aid">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryFirstAid" value="first-aid">
+                                                <label class="form-check-label fw-bold" for="categoryFirstAid">
+                                                    First Aid Supplies
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Bandages, antiseptics, gauze</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="medication">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryMedication" value="medication">
+                                                <label class="form-check-label fw-bold" for="categoryMedication">
+                                                    Medications
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Prescription and OTC drugs</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="equipment">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryEquipment" value="equipment">
+                                                <label class="form-check-label fw-bold" for="categoryEquipment">
+                                                    Medical Equipment
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Wheelchairs, crutches, etc.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="category-option" data-category="ppe">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="categoryPPE" value="ppe">
+                                                <label class="form-check-label fw-bold" for="categoryPPE">
+                                                    PPE & Protective Gear
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Masks, gloves, gowns</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Medical Supplies Details</h6>
+                                <div id="medicalItemsContainer">
+                                    <!-- Dynamic medical items will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-outline-gold w-100 mt-2" id="addMoreMedicalBtn">
+                                    <i class="bi bi-plus-circle me-1"></i>Add More Medical Items
+                                </button>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="fw-bold text-gift-green mb-3">Storage & Safety Information</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="medicalStorageType" class="form-label">Storage Requirements</label>
+                                        <select class="form-select" id="medicalStorageType">
+                                            <option value="room-temp">Room Temperature</option>
+                                            <option value="refrigerated">Refrigerated</option>
+                                            <option value="controlled">Temperature Controlled</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="medicalExpiryDate" class="form-label">Expiry Date</label>
+                                        <input type="date" class="form-control" id="medicalExpiryDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="medicalDeliveryType" class="form-label">Delivery Type</label>
+                                        <select class="form-select" id="medicalDeliveryType">
+                                            <option value="dropoff">I will drop off</option>
+                                            <option value="collection">Schedule collection</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="medicalPreferredDate" class="form-label">Preferred Date</label>
+                                        <input type="date" class="form-control" id="medicalPreferredDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="col-12" id="medicalCollectionAddressSection" style="display: none;">
+                                        <label for="medicalCollectionAddress" class="form-label">Collection Address</label>
+                                        <textarea class="form-control" id="medicalCollectionAddress" rows="2" placeholder="Enter your address for collection"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="medicalTerms" required>
+                                    <label class="form-check-label" for="medicalTerms">
+                                        I confirm that all donated medical supplies are within their expiry dates, properly sealed, and stored according to manufacturer guidelines. Prescription medications are properly labeled.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="confirmMedicalBtn">Submit Medical Donation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Navigation Redirection Script -->
+    <!-- Complete JavaScript Implementation -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ------------------------------
@@ -1344,6 +1664,16 @@
                 // In a real application, this would show detailed clothing items
             };
 
+            window.viewFoodDetails = function(donationId) {
+                alert(`Showing details for food donation ${donationId}...`);
+                // In a real application, this would show detailed food items
+            };
+
+            window.viewMedicalDetails = function(donationId) {
+                alert(`Showing details for medical donation ${donationId}...`);
+                // In a real application, this would show detailed medical items
+            };
+
             window.manageRecurring = function(donationId) {
                 alert(`Managing recurring donation ${donationId}...`);
                 // In a real application, this would open the recurring donation management
@@ -1355,6 +1685,8 @@
             const donationTypeBtns = document.querySelectorAll('.donation-type-btn');
             const monetarySection = document.getElementById('monetaryDonationSection');
             const clothingSection = document.getElementById('clothingDonationSection');
+            const foodSection = document.getElementById('foodDonationSection');
+            const medicalSection = document.getElementById('medicalDonationSection');
 
             donationTypeBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -1362,12 +1694,22 @@
                     this.classList.add('selected');
 
                     const type = this.dataset.type;
+
+                    // Hide all sections first
+                    monetarySection.style.display = 'none';
+                    clothingSection.style.display = 'none';
+                    foodSection.style.display = 'none';
+                    medicalSection.style.display = 'none';
+
+                    // Show selected section
                     if (type === 'monetary') {
                         monetarySection.style.display = 'block';
-                        clothingSection.style.display = 'none';
-                    } else {
-                        monetarySection.style.display = 'none';
+                    } else if (type === 'clothing') {
                         clothingSection.style.display = 'block';
+                    } else if (type === 'food') {
+                        foodSection.style.display = 'block';
+                    } else if (type === 'medical') {
+                        medicalSection.style.display = 'block';
                     }
                 });
             });
@@ -1522,7 +1864,7 @@
             const clothingModal = new bootstrap.Modal(document.getElementById('clothingModal'));
             const confirmClothingBtn = document.getElementById('confirmClothingBtn');
             const addMoreClothesBtn = document.getElementById('addMoreClothesBtn');
-            const clothingCategories = document.querySelectorAll('.clothing-category');
+            const clothingCategories = document.querySelectorAll('.category-option');
             const collectionTypeSelect = document.getElementById('collectionType');
             const collectionAddressSection = document.getElementById('collectionAddressSection');
 
@@ -1568,7 +1910,7 @@
             if (confirmClothingBtn) {
                 confirmClothingBtn.addEventListener('click', function() {
                     const termsAgreed = document.getElementById('clothingTerms').checked;
-                    const selectedCategories = Array.from(document.querySelectorAll('.clothing-category input[type="checkbox"]:checked'));
+                    const selectedCategories = Array.from(document.querySelectorAll('.category-option input[type="checkbox"]:checked'));
 
                     if (selectedCategories.length === 0) {
                         alert('Please select at least one clothing category.');
@@ -1626,7 +1968,7 @@
                 const itemId = 'clothingItem_' + Date.now();
 
                 const itemHtml = `
-                    <div class="clothing-item" id="${itemId}">
+                    <div class="item-card" id="${itemId}">
                         <div class="row g-2">
                             <div class="col-md-4">
                                 <label class="form-label">Item Type</label>
@@ -1664,6 +2006,316 @@
                                     <option value="excellent">Excellent</option>
                                     <option value="good" selected>Good</option>
                                     <option value="fair">Fair</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="document.getElementById('${itemId}').remove()">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            }
+
+            // ------------------------------
+            // Food Donation Modal Functionality
+            // ------------------------------
+            const donateFoodBtn = document.getElementById('donateFoodBtn');
+            const foodModal = new bootstrap.Modal(document.getElementById('foodModal'));
+            const confirmFoodBtn = document.getElementById('confirmFoodBtn');
+            const addMoreFoodBtn = document.getElementById('addMoreFoodBtn');
+            const foodCategories = document.querySelectorAll('#foodModal .category-option');
+            const foodDeliveryTypeSelect = document.getElementById('foodDeliveryType');
+            const foodCollectionAddressSection = document.getElementById('foodCollectionAddressSection');
+
+            if (donateFoodBtn) {
+                donateFoodBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    foodModal.show();
+                    addFoodItem(); // Add initial food item
+                });
+            }
+
+            // Style food categories when selected
+            foodCategories.forEach(category => {
+                const checkbox = category.querySelector('input[type="checkbox"]');
+
+                category.addEventListener('click', function() {
+                    checkbox.checked = !checkbox.checked;
+                    if (checkbox.checked) {
+                        this.classList.add('selected');
+                    } else {
+                        this.classList.remove('selected');
+                    }
+                });
+            });
+
+            // Food delivery type change
+            foodDeliveryTypeSelect.addEventListener('change', function() {
+                if (this.value === 'collection') {
+                    foodCollectionAddressSection.style.display = 'block';
+                } else {
+                    foodCollectionAddressSection.style.display = 'none';
+                }
+            });
+
+            // Add more food button
+            if (addMoreFoodBtn) {
+                addMoreFoodBtn.addEventListener('click', function() {
+                    addFoodItem();
+                });
+            }
+
+            // Confirm food donation
+            if (confirmFoodBtn) {
+                confirmFoodBtn.addEventListener('click', function() {
+                    const termsAgreed = document.getElementById('foodTerms').checked;
+                    const selectedCategories = Array.from(document.querySelectorAll('#foodModal .category-option input[type="checkbox"]:checked'));
+
+                    if (selectedCategories.length === 0) {
+                        alert('Please select at least one food category.');
+                        return;
+                    }
+
+                    if (!termsAgreed) {
+                        alert('Please confirm that all food items are within expiry dates and properly stored.');
+                        return;
+                    }
+
+                    // Get food items
+                    const foodItems = [];
+                    document.querySelectorAll('#foodItemsContainer .item-card').forEach(item => {
+                        const type = item.querySelector('.item-type').value;
+                        const quantity = item.querySelector('.item-quantity').value;
+                        const unit = item.querySelector('.item-unit').value;
+
+                        if (type && quantity > 0) {
+                            foodItems.push({ type, quantity, unit });
+                        }
+                    });
+
+                    if (foodItems.length === 0) {
+                        alert('Please add at least one food item.');
+                        return;
+                    }
+
+                    // In a real application, you would process the food donation
+                    alert('Food donation submitted successfully! We will contact you to arrange collection/drop-off.');
+                    foodModal.hide();
+
+                    // Update the recent activity section
+                    const recentActivity = document.querySelector('.card-body.p-3');
+                    if (recentActivity) {
+                        const newActivity = document.createElement('div');
+                        newActivity.className = 'd-flex align-items-start mb-3';
+                        newActivity.innerHTML = `
+                            <div class="bg-success rounded-circle p-2 me-3 flex-shrink-0">
+                                <i class="bi bi-basket text-white"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold text-dark">Food Donation Scheduled</h6>
+                                <small class="text-muted">Just now • ${foodItems.length} items</small>
+                            </div>
+                        `;
+                        recentActivity.insertBefore(newActivity, recentActivity.firstChild);
+                    }
+                });
+            }
+
+            function addFoodItem() {
+                const container = document.getElementById('foodItemsContainer');
+                const itemId = 'foodItem_' + Date.now();
+
+                const itemHtml = `
+                    <div class="item-card" id="${itemId}">
+                        <div class="row g-2">
+                            <div class="col-md-5">
+                                <label class="form-label">Food Item</label>
+                                <select class="form-select item-type">
+                                    <option value="">Select item</option>
+                                    <option value="canned-goods">Canned Goods</option>
+                                    <option value="pasta">Pasta</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="cereal">Cereal</option>
+                                    <option value="flour">Flour</option>
+                                    <option value="cooking-oil">Cooking Oil</option>
+                                    <option value="baby-formula">Baby Formula</option>
+                                    <option value="fresh-fruit">Fresh Fruit</option>
+                                    <option value="fresh-vegetables">Fresh Vegetables</option>
+                                    <option value="dairy">Dairy Products</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control item-quantity" min="1" value="1">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Unit</label>
+                                <select class="form-select item-unit">
+                                    <option value="kg">Kilograms</option>
+                                    <option value="g">Grams</option>
+                                    <option value="liters">Liters</option>
+                                    <option value="items">Items</option>
+                                    <option value="boxes">Boxes</option>
+                                    <option value="cans">Cans</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="document.getElementById('${itemId}').remove()">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            }
+
+            // ------------------------------
+            // Medical Supplies Donation Modal Functionality
+            // ------------------------------
+            const donateMedicalBtn = document.getElementById('donateMedicalBtn');
+            const medicalModal = new bootstrap.Modal(document.getElementById('medicalModal'));
+            const confirmMedicalBtn = document.getElementById('confirmMedicalBtn');
+            const addMoreMedicalBtn = document.getElementById('addMoreMedicalBtn');
+            const medicalCategories = document.querySelectorAll('#medicalModal .category-option');
+            const medicalDeliveryTypeSelect = document.getElementById('medicalDeliveryType');
+            const medicalCollectionAddressSection = document.getElementById('medicalCollectionAddressSection');
+
+            if (donateMedicalBtn) {
+                donateMedicalBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    medicalModal.show();
+                    addMedicalItem(); // Add initial medical item
+                });
+            }
+
+            // Style medical categories when selected
+            medicalCategories.forEach(category => {
+                const checkbox = category.querySelector('input[type="checkbox"]');
+
+                category.addEventListener('click', function() {
+                    checkbox.checked = !checkbox.checked;
+                    if (checkbox.checked) {
+                        this.classList.add('selected');
+                    } else {
+                        this.classList.remove('selected');
+                    }
+                });
+            });
+
+            // Medical delivery type change
+            medicalDeliveryTypeSelect.addEventListener('change', function() {
+                if (this.value === 'collection') {
+                    medicalCollectionAddressSection.style.display = 'block';
+                } else {
+                    medicalCollectionAddressSection.style.display = 'none';
+                }
+            });
+
+            // Add more medical button
+            if (addMoreMedicalBtn) {
+                addMoreMedicalBtn.addEventListener('click', function() {
+                    addMedicalItem();
+                });
+            }
+
+            // Confirm medical donation
+            if (confirmMedicalBtn) {
+                confirmMedicalBtn.addEventListener('click', function() {
+                    const termsAgreed = document.getElementById('medicalTerms').checked;
+                    const selectedCategories = Array.from(document.querySelectorAll('#medicalModal .category-option input[type="checkbox"]:checked'));
+
+                    if (selectedCategories.length === 0) {
+                        alert('Please select at least one medical category.');
+                        return;
+                    }
+
+                    if (!termsAgreed) {
+                        alert('Please confirm that all medical supplies are within expiry dates and properly stored.');
+                        return;
+                    }
+
+                    // Get medical items
+                    const medicalItems = [];
+                    document.querySelectorAll('#medicalItemsContainer .item-card').forEach(item => {
+                        const type = item.querySelector('.item-type').value;
+                        const quantity = item.querySelector('.item-quantity').value;
+                        const unit = item.querySelector('.item-unit').value;
+
+                        if (type && quantity > 0) {
+                            medicalItems.push({ type, quantity, unit });
+                        }
+                    });
+
+                    if (medicalItems.length === 0) {
+                        alert('Please add at least one medical item.');
+                        return;
+                    }
+
+                    // In a real application, you would process the medical donation
+                    alert('Medical supplies donation submitted successfully! We will contact you to arrange collection/drop-off.');
+                    medicalModal.hide();
+
+                    // Update the recent activity section
+                    const recentActivity = document.querySelector('.card-body.p-3');
+                    if (recentActivity) {
+                        const newActivity = document.createElement('div');
+                        newActivity.className = 'd-flex align-items-start mb-3';
+                        newActivity.innerHTML = `
+                            <div class="bg-danger rounded-circle p-2 me-3 flex-shrink-0">
+                                <i class="bi bi-heart-pulse text-white"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold text-dark">Medical Donation Scheduled</h6>
+                                <small class="text-muted">Just now • ${medicalItems.length} items</small>
+                            </div>
+                        `;
+                        recentActivity.insertBefore(newActivity, recentActivity.firstChild);
+                    }
+                });
+            }
+
+            function addMedicalItem() {
+                const container = document.getElementById('medicalItemsContainer');
+                const itemId = 'medicalItem_' + Date.now();
+
+                const itemHtml = `
+                    <div class="item-card" id="${itemId}">
+                        <div class="row g-2">
+                            <div class="col-md-5">
+                                <label class="form-label">Medical Item</label>
+                                <select class="form-select item-type">
+                                    <option value="">Select item</option>
+                                    <option value="bandages">Bandages</option>
+                                    <option value="gauze">Gauze</option>
+                                    <option value="antiseptic">Antiseptic</option>
+                                    <option value="pain-relievers">Pain Relievers</option>
+                                    <option value="antibiotics">Antibiotics</option>
+                                    <option value="vitamins">Vitamins</option>
+                                    <option value="first-aid-kit">First Aid Kit</option>
+                                    <option value="wheelchair">Wheelchair</option>
+                                    <option value="crutches">Crutches</option>
+                                    <option value="face-masks">Face Masks</option>
+                                    <option value="gloves">Gloves</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control item-quantity" min="1" value="1">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Unit</label>
+                                <select class="form-select item-unit">
+                                    <option value="boxes">Boxes</option>
+                                    <option value="packs">Packs</option>
+                                    <option value="bottles">Bottles</option>
+                                    <option value="units">Units</option>
+                                    <option value="kits">Kits</option>
                                 </select>
                             </div>
                             <div class="col-md-1 d-flex align-items-end">
