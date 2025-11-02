@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<RootNamespace>DisasterAlleviation.Tests</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Core testing packages -->
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+		<PackageReference Include="xunit" Version="2.5.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.0" />
+		<PackageReference Include="coverlet.collector" Version="6.0.0" />
+
+		<!-- EF and Identity support for testing -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.20" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.20" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Link to main project -->
+		<ProjectReference Include="..\Disaster Alleviation Web App\Disaster_Alleviation_Web_App.csproj" />
+
+	</ItemGroup>
+
+</Project>
